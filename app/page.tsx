@@ -22,7 +22,7 @@ import { ADMIN_EMAILS, calculateDaysOOS, logHistory } from './utils';
 // --- DYNAMIC IMPORTS ---
 const BusTracker = dynamic(() => import('./BusTracker'), { 
     ssr: false, 
-    loading: () => <div className="flex items-center justify-center h-[50vh] bg-slate-100 rounded-2xl"><div className="w-12 h-12 border-4 border-[#002d72] border-t-transparent rounded-full animate-spin"></div></div> 
+    loading: () => <div className="flex items-center justify-center h-[50vh] bg-slate-100 rounded-2xl"><div className="w-12 h-12 border-4 border-[#522D80] border-t-transparent rounded-full animate-spin"></div></div> 
 });
 
 // --- ICONS (Inline SVGs) ---
@@ -225,11 +225,11 @@ export default function FleetManager() {
         <div className="min-h-screen flex flex-col bg-slate-900 font-sans">
             {toast && <Toast message={toast.msg} type={toast.type} onClose={()=>setToast(null)} />}
             <div className="flex-grow flex items-center justify-center p-4">
-                <form onSubmit={handleAuth} className="bg-slate-800 p-10 rounded-2xl shadow-2xl w-full max-w-md border-t-[12px] border-[#ef7c00] animate-in fade-in zoom-in">
-                    <div className="flex justify-center mb-6"><div className="w-4 h-10 bg-[#ef7c00] rounded-full mr-3"></div><h2 className="text-4xl font-black text-white italic uppercase tracking-tighter">FleetFlow</h2></div>
-                    <input className="w-full p-4 mb-4 rounded-xl bg-slate-900 border-2 border-slate-700 text-white font-bold focus:ring-2 focus:ring-[#ef7c00]/50 outline-none transition-all" placeholder="Email Address" value={email} onChange={e=>setEmail(e.target.value)} required />
-                    <input className="w-full p-4 mb-6 rounded-xl bg-slate-900 border-2 border-slate-700 text-white font-bold focus:ring-2 focus:ring-[#ef7c00]/50 outline-none transition-all" type="password" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)} required />
-                    <button className="w-full py-5 bg-[#ef7c00] text-white font-black uppercase tracking-widest rounded-xl shadow-lg hover:bg-orange-600 transition-colors">{isSignUp ? 'Register' : 'Login Securely'}</button>
+                <form onSubmit={handleAuth} className="bg-slate-800 p-10 rounded-2xl shadow-2xl w-full max-w-md border-t-[12px] border-[#FFC72C] animate-in fade-in zoom-in">
+                    <div className="flex justify-center mb-6"><div className="w-4 h-10 bg-[#FFC72C] rounded-full mr-3"></div><h2 className="text-4xl font-black text-white italic uppercase tracking-tighter">FleetFlow</h2></div>
+                    <input className="w-full p-4 mb-4 rounded-xl bg-slate-900 border-2 border-slate-700 text-white font-bold focus:ring-2 focus:ring-[#FFC72C]/50 outline-none transition-all" placeholder="Email Address" value={email} onChange={e=>setEmail(e.target.value)} required />
+                    <input className="w-full p-4 mb-6 rounded-xl bg-slate-900 border-2 border-slate-700 text-white font-bold focus:ring-2 focus:ring-[#FFC72C]/50 outline-none transition-all" type="password" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)} required />
+                    <button className="w-full py-5 bg-[#FFC72C] text-[#522D80] font-black uppercase tracking-widest rounded-xl shadow-lg hover:bg-yellow-500 transition-colors">{isSignUp ? 'Register' : 'Login Securely'}</button>
                     <button type="button" onClick={()=>setIsSignUp(!isSignUp)} className="w-full mt-6 text-slate-400 text-xs font-bold hover:text-white transition-colors">{isSignUp ? 'Back to Login' : "Don't have an account? Sign Up"}</button>
                 </form>
             </div>
@@ -243,17 +243,17 @@ export default function FleetManager() {
                 <div className="flex justify-center mb-4"><Icons.Shield /></div>
                 <h2 className="text-3xl font-black uppercase italic mb-4">Access Restricted</h2>
                 <p className="opacity-50 font-bold mb-8">Your account is pending administrator approval. Please check back later.</p>
-                <button onClick={()=>signOut(auth)} className="w-full py-4 bg-[#002d72] rounded-xl font-black uppercase tracking-widest shadow-xl hover:bg-blue-800 transition-colors">Sign Out</button>
+                <button onClick={()=>signOut(auth)} className="w-full py-4 bg-[#522D80] rounded-xl font-black uppercase tracking-widest shadow-xl hover:bg-purple-900 transition-colors">Sign Out</button>
             </div>
             <div className="absolute bottom-0 w-full"><Footer onShowLegal={setLegalType} darkMode={true} /></div>
         </div>
     );
 
-    const activeNavStyles = darkMode ? 'bg-[#ef7c00]/10 text-[#ef7c00] border-r-4 border-[#ef7c00]' : 'bg-[#002d72]/10 text-[#002d72] border-r-4 border-[#002d72]';
+    const activeNavStyles = darkMode ? 'bg-[#FFC72C]/10 text-[#FFC72C] border-r-4 border-[#FFC72C]' : 'bg-[#522D80]/10 text-[#522D80] border-r-4 border-[#522D80]';
     const inactiveNavStyles = darkMode ? 'text-slate-400 hover:bg-slate-800/50 hover:text-white border-r-4 border-transparent' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 border-r-4 border-transparent';
 
     return (
-        <div className={`flex h-screen w-full font-sans overflow-hidden selection:bg-[#ef7c00] selection:text-white transition-colors duration-300 ${darkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
+        <div className={`flex h-screen w-full font-sans overflow-hidden selection:bg-[#FFC72C] selection:text-slate-900 transition-colors duration-300 ${darkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
             {toast && <Toast message={toast.msg} type={toast.type} onClose={()=>setToast(null)} />}
             {selectedBusDetail && (<div className="fixed inset-0 z-[6000] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-200"><BusDetailView bus={selectedBusDetail} onClose={() => setSelectedBusDetail(null)} showToast={showToast} darkMode={darkMode} isAdmin={isAdmin} statusOptions={statusOptions} canEdit={effectiveRole !== 'basic'} /></div>)}
             {legalType && <LegalModal type={legalType} onClose={()=>setLegalType(null)} darkMode={darkMode} />}
@@ -261,8 +261,8 @@ export default function FleetManager() {
             {/* --- DESKTOP SIDEBAR --- */}
             <aside className={`hidden md:flex flex-col w-64 flex-shrink-0 border-r shadow-2xl z-20 ${darkMode ? 'bg-slate-900/80 border-slate-800/50 backdrop-blur-xl' : 'bg-white/80 border-slate-200/50 backdrop-blur-xl'}`}>
                 <div className={`p-6 flex items-center gap-3 border-b ${darkMode ? 'border-slate-800/50' : 'border-slate-200/50'}`}>
-                    <div className="w-2 h-8 bg-[#ef7c00] rounded-full shadow-[0_0_10px_rgba(239,124,0,0.5)]"></div>
-                    <div><h1 className="font-black text-xl italic uppercase tracking-tighter leading-none">FleetFlow</h1><p className={`text-[9px] font-black uppercase tracking-widest mt-1 ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>Hamilton Division</p></div>
+                    <div className="w-2 h-8 bg-[#FFC72C] rounded-full shadow-[0_0_10px_rgba(255,199,44,0.5)]"></div>
+                    <div><h1 className="font-black text-xl italic uppercase tracking-tighter leading-none">FleetFlow</h1><p className={`text-[9px] font-black uppercase tracking-widest mt-1 ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>Gwinnett Place</p></div>
                 </div>
                 <nav className="flex-1 overflow-y-auto py-4 custom-scrollbar">
                     <ul className="space-y-1 px-3">
@@ -287,7 +287,7 @@ export default function FleetManager() {
             {/* --- MOBILE HEADER & DRAWER --- */}
             <div className={`md:hidden flex flex-col w-full h-full`}>
                 <header className={`flex items-center justify-between p-4 border-b flex-shrink-0 z-50 backdrop-blur-xl ${darkMode ? 'bg-slate-900/80 border-slate-800/50' : 'bg-white/80 border-slate-200/50'}`}>
-                    <div className="flex items-center gap-2"><div className="w-1.5 h-6 bg-[#ef7c00] rounded-full shadow-[0_0_8px_rgba(239,124,0,0.5)]"></div><h1 className="font-black text-lg italic uppercase tracking-tighter">FleetFlow</h1></div>
+                    <div className="flex items-center gap-2"><div className="w-1.5 h-6 bg-[#FFC72C] rounded-full shadow-[0_0_8px_rgba(255,199,44,0.5)]"></div><h1 className="font-black text-lg italic uppercase tracking-tighter">FleetFlow</h1></div>
                     <div className="flex gap-3 items-center">
                         <button onClick={()=>setDarkMode(!darkMode)} className="text-xl">{darkMode ? '☀️' : '🌙'}</button>
                         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={`p-2 rounded-lg ${darkMode ? 'bg-slate-800 text-white' : 'bg-slate-100 text-black'}`}><Icons.Menu /></button>
@@ -300,7 +300,7 @@ export default function FleetManager() {
                             <ul className="space-y-2">
                                 {navItems.filter(item => item.roles.includes(effectiveRole)).map(item => (
                                     <li key={item.id}>
-                                        <button onClick={() => { setView(item.id as any); setIsMobileMenuOpen(false); }} className={`w-full flex items-center gap-4 p-4 rounded-2xl text-sm font-black uppercase tracking-widest transition-all ${view === item.id ? (darkMode ? 'bg-[#ef7c00] text-white shadow-lg shadow-orange-500/20' : 'bg-[#002d72] text-white shadow-lg shadow-blue-900/20') : (darkMode ? 'bg-slate-800/50 text-slate-300' : 'bg-slate-100/50 text-slate-600')}`}>{item.icon} {item.label}</button>
+                                        <button onClick={() => { setView(item.id as any); setIsMobileMenuOpen(false); }} className={`w-full flex items-center gap-4 p-4 rounded-2xl text-sm font-black uppercase tracking-widest transition-all ${view === item.id ? (darkMode ? 'bg-[#FFC72C] text-[#522D80] shadow-lg shadow-yellow-500/20' : 'bg-[#522D80] text-white shadow-lg shadow-purple-900/20') : (darkMode ? 'bg-slate-800/50 text-slate-300' : 'bg-slate-100/50 text-slate-600')}`}>{item.icon} {item.label}</button>
                                     </li>
                                 ))}
                             </ul>
@@ -382,14 +382,14 @@ const InventoryView = ({ buses, sortedBuses, searchTerm, setSearchTerm, inventor
     };
 
     const handleDragOver = (e: React.DragEvent) => {
-        e.preventDefault(); // Necessary to allow dropping
+        e.preventDefault(); 
     };
 
     return (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-[1600px] mx-auto h-full flex flex-col">
             <div className="flex justify-between items-end mb-6">
                 <div>
-                    <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Fleet Inventory</h2>
+                    <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Fleet Inventory</h2>
                     <p className={`text-[10px] font-black uppercase tracking-widest mt-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Live Status Board</p>
                 </div>
             </div>
@@ -407,8 +407,8 @@ const InventoryView = ({ buses, sortedBuses, searchTerm, setSearchTerm, inventor
                     
                     const isSelected = activeFilter === (l==='Total'?'Total Fleet':l);
                     const cardBg = darkMode 
-                        ? (isSelected ? 'bg-gradient-to-br from-slate-800 to-slate-800 border-[#ef7c00] shadow-[0_0_15px_rgba(239,124,0,0.1)]' : 'bg-gradient-to-br from-slate-900 to-slate-900/50 border-slate-800 hover:border-slate-700')
-                        : (isSelected ? 'bg-gradient-to-br from-white to-blue-50 border-[#002d72] shadow-lg shadow-blue-900/5' : 'bg-gradient-to-br from-white to-slate-50 border-slate-200 hover:border-slate-300 shadow-sm');
+                        ? (isSelected ? 'bg-gradient-to-br from-slate-800 to-slate-800 border-[#FFC72C] shadow-[0_0_15px_rgba(255,199,44,0.1)]' : 'bg-gradient-to-br from-slate-900 to-slate-900/50 border-slate-800 hover:border-slate-700')
+                        : (isSelected ? 'bg-gradient-to-br from-white to-purple-50 border-[#522D80] shadow-lg shadow-purple-900/5' : 'bg-gradient-to-br from-white to-slate-50 border-slate-200 hover:border-slate-300 shadow-sm');
 
                     return (
                         <div key={l} onClick={()=>setActiveFilter(l==='Total'?'Total Fleet':l)} className={`cursor-pointer p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm ${cardBg}`}>
@@ -421,17 +421,17 @@ const InventoryView = ({ buses, sortedBuses, searchTerm, setSearchTerm, inventor
             
             {/* SEARCH & FILTERS */}
             <div className="flex flex-col xl:flex-row justify-between items-end gap-4 mb-6">
-                <input className={`w-full xl:max-w-md p-3.5 rounded-xl border-2 font-bold outline-none transition-all duration-300 focus:ring-4 focus:ring-[#ef7c00]/20 focus:border-[#ef7c00] ${darkMode ? 'bg-slate-900/50 border-slate-800 text-white placeholder:text-slate-500' : 'bg-white border-slate-200 text-black placeholder:text-slate-400 shadow-sm'}`} placeholder="Search Unit # or Location..." value={searchTerm} onChange={e=>setSearchTerm(e.target.value)} />
+                <input className={`w-full xl:max-w-md p-3.5 rounded-xl border-2 font-bold outline-none transition-all duration-300 focus:ring-4 focus:ring-[#FFC72C]/20 focus:border-[#FFC72C] ${darkMode ? 'bg-slate-900/50 border-slate-800 text-white placeholder:text-slate-500' : 'bg-white border-slate-200 text-black placeholder:text-slate-400 shadow-sm'}`} placeholder="Search Unit # or Location..." value={searchTerm} onChange={e=>setSearchTerm(e.target.value)} />
                 <div className={`flex w-full xl:w-auto gap-2 p-1.5 border rounded-xl shadow-sm overflow-x-auto ${darkMode ? 'bg-slate-900/50 border-slate-800 backdrop-blur-md' : 'bg-white border-slate-200'}`}>
-                    {['list', 'grid', 'tv', 'floor'].map(m => <button key={m} onClick={()=>setInventoryMode(m as any)} className={`flex-1 xl:flex-none px-6 py-2 text-[10px] font-black uppercase rounded-lg transition-all duration-300 ${inventoryMode === m ? 'bg-[#ef7c00] text-white shadow-md' : (darkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-[#002d72] hover:bg-slate-50')}`}>{m}</button>)}
-                    {inventoryMode === 'tv' && <button onClick={toggleFullScreen} className={`flex-1 xl:flex-none px-4 py-2 text-[10px] font-black uppercase rounded-lg transition-all flex items-center justify-center gap-1 ${darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-[#002d72]'}`}>⛶ Fullscreen</button>}
+                    {['list', 'grid', 'tv', 'floor'].map(m => <button key={m} onClick={()=>setInventoryMode(m as any)} className={`flex-1 xl:flex-none px-6 py-2 text-[10px] font-black uppercase rounded-lg transition-all duration-300 ${inventoryMode === m ? 'bg-[#FFC72C] text-[#522D80] shadow-md' : (darkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-[#522D80] hover:bg-slate-50')}`}>{m}</button>)}
+                    {inventoryMode === 'tv' && <button onClick={toggleFullScreen} className={`flex-1 xl:flex-none px-4 py-2 text-[10px] font-black uppercase rounded-lg transition-all flex items-center justify-center gap-1 ${darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-[#522D80]'}`}>⛶ Fullscreen</button>}
                 </div>
             </div>
             
             {/* INVENTORY CONTAINER */}
             <div className={`rounded-3xl border shadow-xl overflow-hidden backdrop-blur-xl flex-grow flex flex-col ${darkMode ? 'bg-slate-900/50 border-slate-800/50' : 'bg-white/80 border-slate-200/50'}`}>
                 
-                {/* --- NEW: SHOP FLOOR MAP MODE --- */}
+                {/* --- SHOP FLOOR MAP MODE --- */}
                 {inventoryMode === 'floor' && (
                     <div className="flex h-full w-full p-4 gap-6 overflow-hidden">
                         
@@ -471,7 +471,6 @@ const InventoryView = ({ buses, sortedBuses, searchTerm, setSearchTerm, inventor
                         <div className="flex-grow overflow-y-auto custom-scrollbar">
                             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 pb-10 pr-2">
                                 {SHOP_ZONES.map(zone => {
-                                    // Find buses currently parked in this zone
                                     const parkedBuses = sortedBuses.filter((b:any) => b.location === zone.id);
                                     
                                     return (
@@ -479,10 +478,10 @@ const InventoryView = ({ buses, sortedBuses, searchTerm, setSearchTerm, inventor
                                             key={zone.id}
                                             onDrop={(e) => handleDrop(e, zone.id)} 
                                             onDragOver={handleDragOver}
-                                            className={`min-h-[160px] p-4 rounded-2xl border-2 flex flex-col transition-colors ${darkMode ? 'bg-slate-900/50 border-slate-700 hover:border-slate-500' : 'bg-slate-50 border-dashed border-slate-300 hover:border-[#002d72]'}`}
+                                            className={`min-h-[160px] p-4 rounded-2xl border-2 flex flex-col transition-colors ${darkMode ? 'bg-slate-900/50 border-slate-700 hover:border-slate-500' : 'bg-slate-50 border-dashed border-slate-300 hover:border-[#522D80]'}`}
                                         >
                                             <div className="flex justify-between items-center mb-4 border-b border-slate-500/20 pb-2">
-                                                <h3 className={`font-black uppercase tracking-widest ${zone.type === 'pit' ? 'text-amber-500' : darkMode ? 'text-white' : 'text-[#002d72]'}`}>{zone.id}</h3>
+                                                <h3 className={`font-black uppercase tracking-widest ${zone.type === 'pit' ? 'text-amber-500' : darkMode ? 'text-white' : 'text-[#522D80]'}`}>{zone.id}</h3>
                                                 <span className="text-[9px] font-black uppercase opacity-30">{parkedBuses.length} Unit(s)</span>
                                             </div>
 
@@ -500,7 +499,7 @@ const InventoryView = ({ buses, sortedBuses, searchTerm, setSearchTerm, inventor
                                                             className={`p-3 rounded-xl border cursor-grab active:cursor-grabbing shadow-md ${darkMode ? 'bg-slate-800 border-slate-600' : 'bg-white border-slate-200'}`}
                                                         >
                                                             <div className="flex justify-between items-center">
-                                                                <span className="font-black text-xl text-[#ef7c00]">#{b.number}</span>
+                                                                <span className="font-black text-xl text-[#FFC72C]">#{b.number}</span>
                                                                 <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest ${getBadgeStyle(type)}`}>{b.status}</span>
                                                             </div>
                                                         </div>
@@ -512,7 +511,6 @@ const InventoryView = ({ buses, sortedBuses, searchTerm, setSearchTerm, inventor
                                 })}
                             </div>
                         </div>
-
                     </div>
                 )}
 
@@ -522,9 +520,8 @@ const InventoryView = ({ buses, sortedBuses, searchTerm, setSearchTerm, inventor
                     <div ref={tvBoardRef} className={`p-4 sm:p-8 overflow-y-auto custom-scrollbar w-full ${isFullscreen ? (darkMode ? 'bg-slate-950 text-white h-screen' : 'bg-slate-50 text-slate-900 h-screen') : 'min-h-[500px]'}`}>
                         {isFullscreen && (
                             <div className={`flex justify-between items-end mb-8 border-b-2 pb-6 ${darkMode ? 'border-slate-800' : 'border-slate-300'}`}>
-                                <div><h2 className="text-6xl font-black uppercase tracking-tighter text-[#ef7c00]">Fleet Status Board</h2><p className={`text-2xl font-bold mt-3 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>Total Units: {buses.length} | Down: <span className="text-red-500">{buses.filter((b:any)=>b.status!=='Active').length}</span></p></div>
+                                <div><h2 className="text-6xl font-black uppercase tracking-tighter text-[#FFC72C]">Fleet Status Board</h2><p className={`text-2xl font-bold mt-3 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>Total Units: {buses.length} | Down: <span className="text-red-500">{buses.filter((b:any)=>b.status!=='Active').length}</span></p></div>
                                 <div className="flex items-center gap-6">
-                                    {/* WAKE LOCK INDICATOR */}
                                     <div className={`flex items-center gap-3 px-5 py-3 rounded-2xl border ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-300'} shadow-sm`}>
                                         <span className="relative flex h-4 w-4">
                                             {isLocked && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>}
@@ -594,18 +591,18 @@ const InventoryView = ({ buses, sortedBuses, searchTerm, setSearchTerm, inventor
                         <table className="w-full text-left text-sm">
                             <thead className={`font-black uppercase text-[10px] tracking-widest border-b sticky top-0 z-10 ${darkMode ? 'bg-slate-900 text-slate-400 border-slate-700' : 'bg-slate-50 text-slate-500 border-slate-200'}`}>
                                 <tr>
-                                    <th className="p-5 cursor-pointer hover:text-[#ef7c00] transition-colors" onClick={()=>requestSort('number')}>Unit #</th>
+                                    <th className="p-5 cursor-pointer hover:text-[#FFC72C] transition-colors" onClick={()=>requestSort('number')}>Unit #</th>
                                     <th className="p-5">Status</th>
                                     <th className="p-5">Location</th>
                                     <th className="p-5">Notes</th>
-                                    <th className="p-5 cursor-pointer hover:text-[#ef7c00] transition-colors" onClick={()=>requestSort('daysOOS')}>Days OOS</th>
+                                    <th className="p-5 cursor-pointer hover:text-[#FFC72C] transition-colors" onClick={()=>requestSort('daysOOS')}>Days OOS</th>
                                 </tr>
                             </thead>
                             <tbody className={`divide-y ${darkMode ? 'divide-slate-800' : 'divide-slate-100'}`}>
                                 {sortedBuses.map((b: any) => {
                                     const type = getStatusType(b.status);
                                     return (
-                                        <tr key={b.docId} onClick={()=>setSelectedBusDetail(b)} className={`cursor-pointer transition-colors duration-200 ${darkMode ? 'hover:bg-slate-800/50' : 'hover:bg-blue-50/50'}`}>
+                                        <tr key={b.docId} onClick={()=>setSelectedBusDetail(b)} className={`cursor-pointer transition-colors duration-200 ${darkMode ? 'hover:bg-slate-800/50' : 'hover:bg-purple-50/50'}`}>
                                             <td className="p-5 font-black text-lg">#{b.number}</td>
                                             <td className="p-5"><span className={`px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${getBadgeStyle(type)}`}>{b.status}</span></td>
                                             <td className="p-5 font-bold text-xs">{b.location || '-'}</td>

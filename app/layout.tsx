@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MARTA Fleet Operations",
-  description: "Fleet management dashboard",
+  // UPDATED: Changed from MARTA to GWCT
+  title: "GWCT Fleet Operations",
+  description: "Ride Gwinnett fleet management dashboard by FleetFlow",
 };
 
 export default function RootLayout({

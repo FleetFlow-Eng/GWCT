@@ -1,0 +1,109 @@
+[debug] [2026-03-18T20:33:09.141Z] ----------------------------------------------------------------------
+[debug] [2026-03-18T20:33:09.143Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\aneto\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2026-03-18T20:33:09.143Z] CLI Version:   15.10.1
+[debug] [2026-03-18T20:33:09.143Z] Platform:      win32
+[debug] [2026-03-18T20:33:09.143Z] Node Version:  v24.11.1
+[debug] [2026-03-18T20:33:09.143Z] Time:          Wed Mar 18 2026 16:33:09 GMT-0400 (Eastern Daylight Time)
+[debug] [2026-03-18T20:33:09.143Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-03-18T20:33:09.146Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\aneto\OneDrive\Desktop\GWCT\GWCT
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[debug] [2026-03-18T20:33:10.630Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2026-03-18T20:33:10.630Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
+[debug] [2026-03-18T20:33:26.767Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-03-18T20:33:26.767Z] > authorizing via signed-in user (anetowestfield@gmail.com)
+[debug] [2026-03-18T20:33:26.768Z] Checked if tokens are valid: false, expires at: 1769667983071
+[debug] [2026-03-18T20:33:26.768Z] Checked if tokens are valid: false, expires at: 1769667983071
+[debug] [2026-03-18T20:33:26.769Z] > refreshing access token with scopes: []
+[debug] [2026-03-18T20:33:26.769Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-03-18T20:33:26.770Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-03-18T20:33:26.920Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-03-18T20:33:26.920Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-03-18T20:33:26.934Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/bus-inventory [none]
+[debug] [2026-03-18T20:33:27.182Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/bus-inventory 200
+[debug] [2026-03-18T20:33:27.183Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/bus-inventory {"projectId":"bus-inventory","projectNumber":"449114522566","displayName":"bus-inventory","name":"projects/bus-inventory","resources":{"hostingSite":"bus-inventory"},"state":"ACTIVE","etag":"1_51048875-147a-4f8e-bc00-4a43c12dfb37"}
+[info] i  Using project bus-inventory (bus-inventory) . 
+[info] 
+=== Dataconnect Setup
+[info] i  dataconnect: ensuring required API firebasedataconnect.googleapis.com is enabled... 
+[debug] [2026-03-18T20:33:27.195Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:33:27.195Z] Checked if tokens are valid: true, expires at: 1773869605920
+[info] i  dataconnect: ensuring required API sqladmin.googleapis.com is enabled... 
+[debug] [2026-03-18T20:33:27.196Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:33:27.196Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:33:27.196Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-03-18T20:33:27.196Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/firebasedataconnect.googleapis.com  x-goog-user-project=bus-inventory
+[debug] [2026-03-18T20:33:27.197Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/sqladmin.googleapis.com [none]
+[debug] [2026-03-18T20:33:27.197Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/sqladmin.googleapis.com  x-goog-user-project=bus-inventory
+[debug] [2026-03-18T20:33:27.584Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-03-18T20:33:27.584Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/firebasedataconnect.googleapis.com [omitted]
+[warn] !  dataconnect: missing required API firebasedataconnect.googleapis.com. Enabling now... 
+[debug] [2026-03-18T20:33:27.585Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:33:27.585Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:33:27.585Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/firebasedataconnect.googleapis.com:enable [none]
+[debug] [2026-03-18T20:33:27.585Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/firebasedataconnect.googleapis.com:enable  x-goog-user-project=bus-inventory
+[debug] [2026-03-18T20:33:27.587Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/sqladmin.googleapis.com 200
+[debug] [2026-03-18T20:33:27.587Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/sqladmin.googleapis.com [omitted]
+[warn] !  dataconnect: missing required API sqladmin.googleapis.com. Enabling now... 
+[debug] [2026-03-18T20:33:27.588Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:33:27.588Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:33:27.588Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/sqladmin.googleapis.com:enable [none]
+[debug] [2026-03-18T20:33:27.588Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/sqladmin.googleapis.com:enable  x-goog-user-project=bus-inventory
+[debug] [2026-03-18T20:33:28.203Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/firebasedataconnect.googleapis.com:enable 200
+[debug] [2026-03-18T20:33:28.203Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/firebasedataconnect.googleapis.com:enable [omitted]
+[debug] [2026-03-18T20:33:28.232Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/sqladmin.googleapis.com:enable 200
+[debug] [2026-03-18T20:33:28.232Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/sqladmin.googleapis.com:enable [omitted]
+[debug] [2026-03-18T20:33:38.241Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:33:38.241Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:33:38.241Z] >>> [apiv2][query] GET https://firebasedataconnect.googleapis.com/v1/projects/bus-inventory/locations/-/services [none]
+[debug] [2026-03-18T20:33:38.794Z] <<< [apiv2][status] GET https://firebasedataconnect.googleapis.com/v1/projects/bus-inventory/locations/-/services 200
+[debug] [2026-03-18T20:33:38.796Z] <<< [apiv2][body] GET https://firebasedataconnect.googleapis.com/v1/projects/bus-inventory/locations/-/services {}
+[info] i  : ensuring required API cloudaicompanion.googleapis.com is enabled... 
+[debug] [2026-03-18T20:39:27.312Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:39:27.312Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:39:27.312Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/cloudaicompanion.googleapis.com [none]
+[debug] [2026-03-18T20:39:27.312Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/cloudaicompanion.googleapis.com  x-goog-user-project=bus-inventory
+[debug] [2026-03-18T20:39:27.690Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/cloudaicompanion.googleapis.com 200
+[debug] [2026-03-18T20:39:27.690Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/bus-inventory/services/cloudaicompanion.googleapis.com [omitted]
+[info] +  : required API cloudaicompanion.googleapis.com is enabled 
+[debug] [2026-03-18T20:39:33.590Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:39:33.591Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:39:33.591Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/bus-inventory/billingInfo [none]
+[debug] [2026-03-18T20:39:33.796Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/bus-inventory/billingInfo 200
+[debug] [2026-03-18T20:39:33.796Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/bus-inventory/billingInfo {"name":"projects/bus-inventory/billingInfo","projectId":"bus-inventory","billingAccountName":"billingAccounts/01178D-EEE59C-6B5790","billingEnabled":true}
+[debug] [2026-03-18T20:39:33.799Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:39:33.799Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:39:33.800Z] >>> [apiv2][query] GET https://monitoring.googleapis.com/v3/projects/bus-inventory/timeSeries/ filter=metric.type%3D%22serviceruntime.googleapis.com%2Fquota%2Fallocation%2Fusage%22+AND+metric.label.quota_metric+%3D+%22sqladmin.googleapis.com%2Ffdc_lifetime_free_trial_per_project%22&interval.endTime=2026-03-18T20%3A39%3A33.799Z&interval.startTime=2026-03-11T20%3A39%3A33.796Z
+[debug] [2026-03-18T20:39:35.140Z] <<< [apiv2][status] GET https://monitoring.googleapis.com/v3/projects/bus-inventory/timeSeries/ 200
+[debug] [2026-03-18T20:39:35.140Z] <<< [apiv2][body] GET https://monitoring.googleapis.com/v3/projects/bus-inventory/timeSeries/ {"unit":"1"}
+[info] +  dataconnect: CloudSQL no cost trial available! 
+[debug] [2026-03-18T20:39:35.141Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:39:35.142Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:39:35.142Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/bus-inventory/instances [none]
+[debug] [2026-03-18T20:39:35.440Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/bus-inventory/instances 200
+[debug] [2026-03-18T20:39:35.440Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/bus-inventory/instances {}
+[debug] [2026-03-18T20:39:35.441Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:39:35.441Z] Checked if tokens are valid: true, expires at: 1773869605920
+[debug] [2026-03-18T20:39:35.441Z] >>> [apiv2][query] GET https://firebasedataconnect.googleapis.com/v1/projects/bus-inventory/locations [none]
+[debug] [2026-03-18T20:39:35.724Z] <<< [apiv2][status] GET https://firebasedataconnect.googleapis.com/v1/projects/bus-inventory/locations 200
+[debug] [2026-03-18T20:39:35.724Z] <<< [apiv2][body] GET https://firebasedataconnect.googleapis.com/v1/projects/bus-inventory/locations {"locations":[{"name":"projects/bus-inventory/locations/asia-east1","locationId":"asia-east1","displayName":"Taiwan"},{"name":"projects/bus-inventory/locations/asia-east2","locationId":"asia-east2","displayName":"Hong Kong"},{"name":"projects/bus-inventory/locations/asia-northeast1","locationId":"asia-northeast1","displayName":"Tokyo"},{"name":"projects/bus-inventory/locations/asia-northeast2","locationId":"asia-northeast2","displayName":"Osaka"},{"name":"projects/bus-inventory/locations/asia-northeast3","locationId":"asia-northeast3","displayName":"Seoul"},{"name":"projects/bus-inventory/locations/asia-south1","locationId":"asia-south1","displayName":"Mumbai"},{"name":"projects/bus-inventory/locations/asia-southeast1","locationId":"asia-southeast1","displayName":"Singapore"},{"name":"projects/bus-inventory/locations/asia-southeast2","locationId":"asia-southeast2","displayName":"Jakarta"},{"name":"projects/bus-inventory/locations/australia-southeast1","locationId":"australia-southeast1","displayName":"Sydney"},{"name":"projects/bus-inventory/locations/australia-southeast2","locationId":"australia-southeast2","displayName":"Melbourne"},{"name":"projects/bus-inventory/locations/europe-central2","locationId":"europe-central2","displayName":"Warsaw"},{"name":"projects/bus-inventory/locations/europe-north1","locationId":"europe-north1","displayName":"Finland"},{"name":"projects/bus-inventory/locations/europe-southwest1","locationId":"europe-southwest1","displayName":"Madrid"},{"name":"projects/bus-inventory/locations/europe-west1","locationId":"europe-west1","displayName":"Belgium"},{"name":"projects/bus-inventory/locations/europe-west2","locationId":"europe-west2","displayName":"London"},{"name":"projects/bus-inventory/locations/europe-west3","locationId":"europe-west3","displayName":"Frankfurt"},{"name":"projects/bus-inventory/locations/europe-west4","locationId":"europe-west4","displayName":"Netherlands"},{"name":"projects/bus-inventory/locations/europe-west6","locationId":"europe-west6","displayName":"Zurich"},{"name":"projects/bus-inventory/locations/europe-west8","locationId":"europe-west8","displayName":"Milan"},{"name":"projects/bus-inventory/locations/europe-west9","locationId":"europe-west9","displayName":"Paris"},{"name":"projects/bus-inventory/locations/me-west1","locationId":"me-west1","displayName":"Tel Aviv"},{"name":"projects/bus-inventory/locations/northamerica-northeast1","locationId":"northamerica-northeast1","displayName":"Montréal"},{"name":"projects/bus-inventory/locations/northamerica-northeast2","locationId":"northamerica-northeast2","displayName":"Toronto"},{"name":"projects/bus-inventory/locations/southamerica-east1","locationId":"southamerica-east1","displayName":"São Paulo"},{"name":"projects/bus-inventory/locations/southamerica-west1","locationId":"southamerica-west1","displayName":"Santiago"},{"name":"projects/bus-inventory/locations/us-central1","locationId":"us-central1","displayName":"Iowa"},{"name":"projects/bus-inventory/locations/us-east1","locationId":"us-east1","displayName":"South Carolina"},{"name":"projects/bus-inventory/locations/us-east4","locationId":"us-east4","displayName":"Northern Virginia"},{"name":"projects/bus-inventory/locations/us-south1","locationId":"us-south1","displayName":"Dallas"},{"name":"projects/bus-inventory/locations/us-west1","locationId":"us-west1","displayName":"Oregon"},{"name":"projects/bus-inventory/locations/us-west2","locationId":"us-west2","displayName":"Los Angeles"},{"name":"projects/bus-inventory/locations/us-west3","locationId":"us-west3","displayName":"Salt Lake City"},{"name":"projects/bus-inventory/locations/us-west4","locationId":"us-west4","displayName":"Las Vegas"}]}

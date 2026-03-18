@@ -43,16 +43,63 @@ export const AdminPanel = ({ showToast, darkMode }: { showToast: any, darkMode: 
         setLoadingLogs(false);
     };
 
+    // --- TEMPORARY SYNC SCRIPT FOR GWINNETT BUSES ---
+    const syncGwinnettBuses = async () => {
+        if (!window.confirm("WARNING: This will delete all current buses and import live Gwinnett buses. Continue?")) return;
+        
+        try {
+            // 1. Erase all current buses in Firestore
+            const busSnap = await getDocs(collection(db, "buses"));
+            const deletePromises = busSnap.docs.map(d => deleteDoc(d.ref));
+            await Promise.all(deletePromises);
+
+            // 2. Fetch the live Gwinnett feed from your API
+            const res = await fetch('/api/vehicles');
+            const liveBuses = await res.json();
+
+            // 3. Add the live buses into Firestore
+            const addPromises = liveBuses.map((bus: any) => {
+                const busNum = bus.vehicleId || bus.id;
+                const routeId = bus.route || "Unknown";
+                
+                return setDoc(doc(db, "buses", String(busNum)), {
+                    number: String(busNum),
+                    status: "Active", // Defaulting to Active since they are currently transmitting
+                    location: `Route ${routeId}`,
+                    notes: "Auto-imported from live GTFS-RT feed",
+                    oosStartDate: null,
+                    disposition: ""
+                });
+            });
+            
+            await Promise.all(addPromises);
+            alert(`Success! Imported ${liveBuses.length} live Gwinnett buses.`);
+            
+        } catch (error) {
+            console.error("Database sync error:", error);
+            alert("An error occurred while syncing the database.");
+        }
+    };
+
     const bgClass = darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-200 text-slate-900';
     return (
         <div className="space-y-8 max-w-6xl mx-auto pb-20 animate-in fade-in slide-in-from-bottom-4">
-            <div>
-                <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Admin Panel</h2>
-                <p className="text-[10px] font-black uppercase tracking-widest opacity-50 mt-1">Manage System Settings</p>
+            <div className="flex justify-between items-end">
+                <div>
+                    <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Admin Panel</h2>
+                    <p className="text-[10px] font-black uppercase tracking-widest opacity-50 mt-1">Manage System Settings</p>
+                </div>
+                {/* TEMPORARY SYNC BUTTON */}
+                <button 
+                    onClick={syncGwinnettBuses}
+                    className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-black text-[10px] uppercase tracking-widest rounded-xl shadow-lg transition-transform active:scale-95"
+                >
+                    ⚠️ Sync Live Gwinnett Fleet
+                </button>
             </div>
             
             <div className={`p-8 rounded-2xl border shadow-xl ${bgClass}`}>
-                <h3 className={`text-xl font-black uppercase italic mb-6 ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Status Menu Customization</h3>
+                <h3 className={`text-xl font-black uppercase italic mb-6 ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Status Menu Customization</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                         <p className="text-[10px] font-black uppercase opacity-50 mb-4">Add New Option</p>
@@ -61,7 +108,7 @@ export const AdminPanel = ({ showToast, darkMode }: { showToast: any, darkMode: 
                             <select className={`p-3 rounded-lg border font-bold outline-none ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-slate-50 border-slate-200'}`} value={newStatus.type} onChange={e=>setNewStatus({...newStatus, type: e.target.value})}>
                                 <option value="ready">Ready (Green)</option><option value="shop">In Shop (Orange)</option><option value="hold">Hold/Down (Red)</option>
                             </select>
-                            <button onClick={handleAddStatus} className="px-6 bg-[#ef7c00] hover:bg-orange-600 text-white font-black rounded-lg transition-colors">+</button>
+                            <button onClick={handleAddStatus} className="px-6 bg-[#522D80] hover:bg-purple-900 text-white font-black rounded-lg transition-colors">+</button>
                         </div>
                     </div>
                     <div className="space-y-2">
@@ -86,12 +133,12 @@ export const AdminPanel = ({ showToast, darkMode }: { showToast: any, darkMode: 
                         {usersList.map(u => {
                             const isMaster = ADMIN_EMAILS.includes(u.email?.toLowerCase());
                             return (
-                                <tr key={u.id} className={darkMode ? 'hover:bg-slate-700' : 'hover:bg-blue-50'}>
-                                    <td className="p-4 font-bold cursor-pointer text-[#ef7c00] hover:underline" onClick={()=>fetchUserHistory(u.email)}>
-                                        {u.email} {isMaster && <span className="text-[8px] bg-purple-500 text-white px-1 py-0.5 rounded ml-2">MASTER</span>}
+                                <tr key={u.id} className={darkMode ? 'hover:bg-slate-700' : 'hover:bg-purple-50'}>
+                                    <td className="p-4 font-bold cursor-pointer text-[#522D80] hover:underline" onClick={()=>fetchUserHistory(u.email)}>
+                                        {u.email} {isMaster && <span className="text-[8px] bg-[#FFC72C] text-slate-900 px-1 py-0.5 rounded ml-2">MASTER</span>}
                                     </td>
                                     <td className="p-4 text-center">
-                                        <span className={`px-2 py-1 rounded text-[9px] font-black uppercase ${isMaster ? 'bg-purple-100 text-purple-700 border border-purple-200' : u.role === 'admin' ? 'bg-purple-100 text-purple-700 border border-purple-200' : u.role === 'basic' ? 'bg-slate-200 text-slate-600 border border-slate-300' : 'bg-blue-100 text-blue-700 border border-blue-200'}`}>
+                                        <span className={`px-2 py-1 rounded text-[9px] font-black uppercase ${isMaster ? 'bg-purple-100 text-[#522D80] border border-[#522D80]' : u.role === 'admin' ? 'bg-purple-100 text-[#522D80] border border-[#522D80]' : u.role === 'basic' ? 'bg-slate-200 text-slate-600 border border-slate-300' : 'bg-blue-100 text-blue-700 border border-blue-200'}`}>
                                             {isMaster ? 'Master Admin' : u.role === 'admin' ? 'Admin' : u.role === 'basic' ? 'Basic (View)' : 'Standard'}
                                         </span>
                                     </td>
