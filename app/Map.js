@@ -14,14 +14,12 @@ const mapStyles = `
   .leaflet-popup-tip-container { display: none !important; }
   .leaflet-popup-content { margin: 0 !important; width: auto !important; }
   
-  /* Completely transparent tooltip with crisp text outline */
   .leaflet-tooltip {
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
       color: #ffffff !important;
       padding: 0 !important;
-      /* Strong black outline to make it readable on any map background */
       text-shadow: 
           -1px -1px 0 #000,  
            1px -1px 0 #000,
@@ -29,7 +27,6 @@ const mapStyles = `
            1px  1px 0 #000,
            0 2px 4px rgba(0,0,0,0.8);
   }
-  /* Hide the default tooltip arrow */
   .leaflet-tooltip::before {
       display: none !important;
   }
@@ -37,8 +34,8 @@ const mapStyles = `
 
 // --- CLEAN MARKER WITH RADAR PING ---
 const createBusIcon = (isStale, isSelected) => {
-    const color = isStale ? '#f43f5e' : '#10b981'; // Rose for ghost, Emerald for live
-    const size = isSelected ? 24 : 14; // Smaller base dot to prevent map blockage
+    const color = isStale ? '#f43f5e' : '#7c3aed'; // Gwinnett Purple
+    const size = isSelected ? 24 : 14; 
     
     const html = `
         <div style="position: relative; width: ${size}px; height: ${size}px;">
@@ -80,11 +77,17 @@ const MapController = ({ center, zoom }) => {
 };
 
 export default function Map({ buses, selectedId, routes, darkMode }) {
-    const defaultCenter = [33.7490, -84.3880]; 
+    // Centered on Gwinnett County
+    const defaultCenter = [33.9564, -84.0063]; 
     
-    const selectedBus = buses?.find((b) => b.vehicle?.vehicle?.id === selectedId);
-    const centerPoint = selectedBus && selectedBus.vehicle?.position?.latitude 
-        ? [selectedBus.vehicle.position.latitude, selectedBus.vehicle.position.longitude] 
+    // Bulletproof selection logic
+    const selectedBus = buses?.find((b) => b.id === selectedId || b.vehicle?.vehicle?.id === selectedId || b.vehicleId === selectedId);
+    
+    const centerPoint = selectedBus 
+        ? [
+            selectedBus.vehicle?.position?.latitude || selectedBus.latitude, 
+            selectedBus.vehicle?.position?.longitude || selectedBus.longitude
+          ] 
         : null;
 
     const tileUrl = darkMode 
@@ -96,45 +99,46 @@ export default function Map({ buses, selectedId, routes, darkMode }) {
             <style>{mapStyles}</style>
             <MapContainer 
                 center={defaultCenter} 
-                zoom={12} 
+                zoom={11} 
                 style={{ height: '100%', width: '100%', background: darkMode ? '#0f172a' : '#f8fafc', zIndex: 0 }}
                 zoomControl={false} 
             >
                 <TileLayer url={tileUrl} />
-                {centerPoint && <MapController center={centerPoint} zoom={16} />}
+                {centerPoint && centerPoint[0] && <MapController center={centerPoint} zoom={15} />}
 
                 {buses?.map((v) => {
-                    const vehicle = v.vehicle;
-                    const lat = vehicle?.position?.latitude;
-                    const lng = vehicle?.position?.longitude;
+                    // BULLETPROOF DATA PARSING: Checks both possible structures
+                    const lat = v.vehicle?.position?.latitude || v.latitude;
+                    const lng = v.vehicle?.position?.longitude || v.longitude;
                     
+                    // If no coordinates are found, skip drawing this specific bus
                     if (!lat || !lng) return null;
 
-                    const busNum = vehicle?.vehicle?.label || vehicle?.vehicle?.id;
-                    const rId = vehicle?.trip?.route_id || vehicle?.trip?.routeId;
+                    const busNum = v.vehicle?.vehicle?.label || v.vehicleId || v.id;
+                    const rId = v.vehicle?.trip?.routeId || v.route;
                     const cleanId = rId ? String(rId).trim() : "";
-                    const routeInfo = routes?.[cleanId] || (cleanId ? `Route ${cleanId}` : "Special/NIS");
+                    const routeInfo = routes?.[cleanId] || (cleanId ? `Route ${cleanId}` : "Ride Gwinnett");
                     
-                    const lastSeenMs = (vehicle?.timestamp || 0) * 1000;
+                    const timestamp = v.vehicle?.timestamp || v.timestamp || 0;
+                    const lastSeenMs = timestamp * 1000;
                     const isStale = (Date.now() - lastSeenMs) > (5 * 60 * 1000); 
-                    const isSelected = selectedId === vehicle?.vehicle?.id;
+                    const isSelected = selectedId === busNum || selectedId === v.id;
 
                     return (
                         <Marker 
-                            key={v.id} 
+                            key={v.id || busNum} 
                             position={[lat, lng]} 
                             icon={createBusIcon(isStale, isSelected)}
                             zIndexOffset={isSelected ? 1000 : (isStale ? 1 : 100)}
                         >
-                            {/* Direction changed to Right so it doesn't stack under the dot */}
                             <Tooltip permanent direction="right" offset={[10, 0]} opacity={1}>
                                 <span style={{ fontWeight: '900', fontSize: '11px', letterSpacing: '0.05em' }}>{busNum}</span>
                             </Tooltip>
 
                             <Popup closeButton={false}>
                                 <div className={`p-4 rounded-2xl shadow-2xl backdrop-blur-xl border ${darkMode ? 'bg-slate-900/90 border-slate-700' : 'bg-white/95 border-slate-200'} min-w-[180px]`}>
-                                    <h3 className={`font-black text-2xl mb-1 tracking-tighter ${darkMode ? 'text-white' : 'text-[#002d72]'}`}>Unit {busNum}</h3>
-                                    <p className="text-[10px] font-black text-[#ef7c00] uppercase mb-4 leading-tight border-b border-slate-500/20 pb-2">
+                                    <h3 className={`font-black text-2xl mb-1 tracking-tighter ${darkMode ? 'text-white' : 'text-[#522D80]'}`}>Unit {busNum}</h3>
+                                    <p className="text-[10px] font-black text-[#FFC72C] uppercase mb-4 leading-tight border-b border-slate-500/20 pb-2">
                                         {routeInfo.split(' - ')[1] || routeInfo}
                                     </p>
                                     <div className="flex justify-between items-center">

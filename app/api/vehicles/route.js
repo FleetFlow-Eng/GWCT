@@ -1,33 +1,40 @@
-// app/api/vehicles/route.js
-// This file is ONLY for the live bus positions
-import GtfsRealtimeBindings from "gtfs-realtime-bindings";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
 
 export async function GET() {
   try {
-    const apiKey = process.env.MARTA_API_KEY;
-    const URL = `https://gtfs-rt.itsmarta.com/TMGTFSRealTimeWebService/vehicle/vehiclepositions.pb?apiKey=${apiKey}`;
-
-    const response = await fetch(URL, {
-      cache: "no-store",
+    // Direct feed from Ride Gwinnett's live Avail system
+    const response = await fetch('https://realtimegwinnett.availtec.com/InfoPoint/GTFS-Realtime.ashx?Type=VehiclePosition', {
+      cache: 'no-store',
       headers: {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      },
+        'Accept': 'application/x-protobuf'
+      }
     });
 
-    if (!response.ok) {
-      throw new Error(`MARTA Error: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
 
     const buffer = await response.arrayBuffer();
-    const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(
-      new Uint8Array(buffer)
-    );
+    const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(new Uint8Array(buffer));
 
-    return NextResponse.json(feed);
+    const vehicles = feed.entity.map(entity => {
+      const v = entity.vehicle;
+      // Safer timestamp handling
+      const ts = v.timestamp?.low ? v.timestamp.low : (Number(v.timestamp) || Math.floor(Date.now() / 1000));
 
+      return {
+        id: entity.id || v.vehicle?.id || 'Unknown',
+        latitude: v.position?.latitude || 0,
+        longitude: v.position?.longitude || 0,
+        route: v.trip?.routeId || 'Unknown',
+        heading: v.position?.bearing || 0,
+        vehicleId: v.vehicle?.label || v.vehicle?.id || 'N/A',
+        timestamp: ts
+      };
+    });
+
+    return NextResponse.json(vehicles);
   } catch (error) {
-    console.error("Vehicle API Error:", error);
-    return NextResponse.json({ error: "Failed to fetch buses" }, { status: 500 });
+    console.error('GWCT Tracker Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

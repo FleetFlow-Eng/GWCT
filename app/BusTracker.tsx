@@ -5,10 +5,10 @@ import dynamic from 'next/dynamic';
 const Map = dynamic(() => import("./Map"), { 
     ssr: false,
     loading: () => (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 text-[#ef7c00] italic font-black">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 text-[#FFC72C] italic font-black">
             <div className="relative flex items-center justify-center w-32 h-32 mb-6">
-                <div className="absolute inset-0 border-4 border-[#ef7c00]/20 rounded-full"></div>
-                <div className="absolute inset-0 border-4 border-[#ef7c00] rounded-full border-t-transparent animate-spin"></div>
+                <div className="absolute inset-0 border-4 border-[#FFC72C]/20 rounded-full"></div>
+                <div className="absolute inset-0 border-4 border-[#FFC72C] rounded-full border-t-transparent animate-spin"></div>
                 <span className="text-3xl">📡</span>
             </div>
             <span className="tracking-widest uppercase animate-pulse">Establishing Satellite Link...</span>
@@ -37,16 +37,17 @@ export default function BusTracker({ darkMode = false }: { darkMode?: boolean })
         const vehicleData = await vegRes.json();
         const routeData = await routeRes.json();
         
-        if (vehicleData && vehicleData.entity) {
+        // UPDATED: Handle the new flat array structure from route.js
+        if (vehicleData && Array.isArray(vehicleData)) {
             setVehicles(prev => {
               const fleetMap = new window.Map(prev.map((v: any) => [v.id, v]));
-              vehicleData.entity.forEach((v: any) => fleetMap.set(v.id, v));
+              vehicleData.forEach((v: any) => fleetMap.set(v.id, v));
               return Array.from(fleetMap.values());
             });
         }
         setRoutes(routeData || {});
       } catch (error) {
-        console.error("Error loading MARTA data:", error);
+        console.error("Error loading Gwinnett data:", error);
       } finally {
         setLoading(false);
       }
@@ -60,14 +61,16 @@ export default function BusTracker({ darkMode = false }: { darkMode?: boolean })
   const stats = useMemo(() => {
     const vList = vehicles || [];
     const total = vList.length;
-    const active = vList.filter(v => (Date.now() - ((v.vehicle?.timestamp || 0) * 1000)) < GHOST_TIMEOUT).length;
+    // UPDATED: Use the flat timestamp property
+    const active = vList.filter(v => (Date.now() - ((v.timestamp || 0) * 1000)) < GHOST_TIMEOUT).length;
     return { total, active, ghost: total - active }; 
   }, [vehicles]);
 
   const processedVehicles = useMemo(() => {
     const vList = vehicles || [];
     let filtered = vList.filter(v => {
-      const lastSeen = (v.vehicle?.timestamp || 0) * 1000;
+      // UPDATED: Use the flat timestamp property
+      const lastSeen = (v.timestamp || 0) * 1000;
       const isStale = (Date.now() - lastSeen) > GHOST_TIMEOUT;
       if (filterStatus === 'active') return !isStale;
       if (filterStatus === 'hold') return isStale;
@@ -75,25 +78,26 @@ export default function BusTracker({ darkMode = false }: { darkMode?: boolean })
     });
 
     filtered = filtered.filter(v => {
-      const busNum = (v.vehicle?.vehicle?.label || v.vehicle?.vehicle?.id || "").toLowerCase();
+      // UPDATED: Use the flat vehicleId property
+      const busNum = (v.vehicleId || v.id || "").toLowerCase();
       return busNum.includes(searchTerm.toLowerCase());
     });
 
     return filtered.sort((a, b) => {
       if (sortBy === "route") {
-        const idA = a.vehicle?.trip?.route_id || a.vehicle?.trip?.routeId;
-        const idB = b.vehicle?.trip?.route_id || b.vehicle?.trip?.routeId;
-        const cleanA = idA ? String(idA).trim() : "";
-        const cleanB = idB ? String(idB).trim() : "";
+        // UPDATED: Use the flat route property
+        const cleanA = a.route ? String(a.route).trim() : "";
+        const cleanB = b.route ? String(b.route).trim() : "";
         const routeA = (routes && cleanA && routes[cleanA]) ? routes[cleanA] : "zzz";
         const routeB = (routes && cleanB && routes[cleanB]) ? routes[cleanB] : "zzz";
         return routeA.localeCompare(routeB);
       }
-      return (a.vehicle?.vehicle?.label || "").localeCompare(b.vehicle?.vehicle?.label || "");
+      // UPDATED: Use the flat vehicleId property
+      return (a.vehicleId || a.id || "").localeCompare(b.vehicleId || b.id || "");
     });
   }, [vehicles, routes, searchTerm, sortBy, filterStatus]);
 
-  if (loading) return null; // Let the dynamic import loading state handle this
+  if (loading) return null;
 
   const hudBg = darkMode ? 'bg-slate-900/85 border-slate-700/50' : 'bg-white/85 border-white/50';
   const textPrimary = darkMode ? 'text-white' : 'text-slate-900';
@@ -115,7 +119,8 @@ export default function BusTracker({ darkMode = false }: { darkMode?: boolean })
         {/* Header & Search */}
         <div className={`p-5 border-b ${darkMode ? 'border-slate-700/50' : 'border-slate-200/50'}`}>
             <div className="flex items-center justify-between mb-5">
-                <h2 className={`text-xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Fleet Radar</h2>
+                {/* UPDATED: Changed branding color to Gwinnett Purple */}
+                <h2 className={`text-xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Fleet Radar</h2>
                 <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
                     <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -130,7 +135,7 @@ export default function BusTracker({ darkMode = false }: { darkMode?: boolean })
                     type="text" 
                     placeholder="Search Unit #..." 
                     value={searchTerm} 
-                    className={`w-full pl-10 pr-4 py-3.5 rounded-xl text-xs font-bold outline-none transition-all focus:ring-2 focus:ring-[#ef7c00]/50 shadow-inner ${darkMode ? 'bg-slate-950/50 text-white placeholder-slate-500 border border-slate-800' : 'bg-slate-100 text-slate-900 placeholder-slate-400 border border-slate-200'}`} 
+                    className={`w-full pl-10 pr-4 py-3.5 rounded-xl text-xs font-bold outline-none transition-all focus:ring-2 focus:ring-[#FFC72C]/50 shadow-inner ${darkMode ? 'bg-slate-950/50 text-white placeholder-slate-500 border border-slate-800' : 'bg-slate-100 text-slate-900 placeholder-slate-400 border border-slate-200'}`} 
                     onChange={(e) => setSearchTerm(e.target.value)} 
                 />
                 <span className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-40 text-sm">🔍</span>
@@ -138,7 +143,8 @@ export default function BusTracker({ darkMode = false }: { darkMode?: boolean })
 
             {/* Segmented Control */}
             <div className={`flex p-1 rounded-xl shadow-inner ${darkMode ? 'bg-slate-950/50 border border-slate-800' : 'bg-slate-100 border border-slate-200'}`}>
-                <button onClick={() => setFilterStatus("all")} className={`flex-1 py-2 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all ${filterStatus === 'all' ? (darkMode ? 'bg-slate-800 text-white shadow-md' : 'bg-white text-[#002d72] shadow-md') : textSecondary}`}>
+                {/* UPDATED: Changed active text color to Gwinnett Purple */}
+                <button onClick={() => setFilterStatus("all")} className={`flex-1 py-2 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all ${filterStatus === 'all' ? (darkMode ? 'bg-slate-800 text-white shadow-md' : 'bg-white text-[#522D80] shadow-md') : textSecondary}`}>
                     All ({stats.total})
                 </button>
                 <button onClick={() => setFilterStatus("active")} className={`flex-1 py-2 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all ${filterStatus === 'active' ? (darkMode ? 'bg-emerald-500/20 text-emerald-400 shadow-md' : 'bg-emerald-50 text-emerald-600 shadow-md') : textSecondary}`}>
@@ -151,7 +157,8 @@ export default function BusTracker({ darkMode = false }: { darkMode?: boolean })
 
             <div className="flex items-center justify-between mt-5 px-1">
                <span className={`text-[8px] font-black uppercase tracking-widest ${textSecondary}`}>Sort Feed By:</span>
-               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className={`bg-transparent text-[10px] font-black uppercase outline-none cursor-pointer hover:opacity-80 transition-opacity ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>
+               {/* UPDATED: Changed sort dropdown color to Gwinnett Purple */}
+               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className={`bg-transparent text-[10px] font-black uppercase outline-none cursor-pointer hover:opacity-80 transition-opacity ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>
                   <option value="unit">Bus #</option>
                   <option value="route">Route ID</option>
                </select>
@@ -166,24 +173,25 @@ export default function BusTracker({ darkMode = false }: { darkMode?: boolean })
                   <p className="text-[10px] font-bold uppercase tracking-widest text-center">No Signals Detected</p>
               </div>
           ) : processedVehicles.map((v) => {
-            const vehicle = v.vehicle;
-            const busNum = vehicle?.vehicle?.label || vehicle?.vehicle?.id;
-            const rId = vehicle?.trip?.route_id || vehicle?.trip?.routeId;
-            const cleanId = rId ? String(rId).trim() : "";
-            let routeInfo = routes?.[cleanId] || (cleanId ? `Route ${cleanId}` : "Special/NIS");
+            // UPDATED: Simplified data access for Gwinnett format
+            const busNum = v.vehicleId || v.id;
+            const cleanId = v.route ? String(v.route).trim() : "";
+            let routeInfo = routes?.[cleanId] || (cleanId ? `Route ${cleanId}` : "Ride Gwinnett");
             
-            const lastSeenMs = (vehicle?.timestamp || 0) * 1000;
+            const lastSeenMs = (v.timestamp || 0) * 1000;
             const isStale = (Date.now() - lastSeenMs) > (5 * 60 * 1000); 
 
-            const isSelected = selectedId === vehicle?.vehicle?.id;
+            // UPDATED: Handle selectedId against the flat id/vehicleId
+            const isSelected = selectedId === busNum || selectedId === v.id;
+            // UPDATED: Changed highlight border to Gwinnett Purple/Gold
             const itemBg = isSelected 
-                ? (darkMode ? 'bg-slate-800/80 border-[#ef7c00] shadow-lg scale-[1.02]' : 'bg-white border-[#002d72] shadow-lg scale-[1.02]') 
+                ? (darkMode ? 'bg-slate-800/80 border-[#FFC72C] shadow-lg scale-[1.02]' : 'bg-white border-[#522D80] shadow-lg scale-[1.02]') 
                 : (darkMode ? 'border-transparent hover:bg-slate-800/50 bg-transparent' : 'border-transparent hover:bg-white/50 bg-transparent');
 
             return (
               <button 
                   key={v.id} 
-                  onClick={() => setSelectedId(vehicle?.vehicle?.id)} 
+                  onClick={() => setSelectedId(busNum)} 
                   className={`w-full p-3.5 rounded-xl border-l-4 text-left flex items-center justify-between group transition-all duration-200 ${itemBg}`}
               >
                 <div className="flex-grow">
@@ -192,7 +200,8 @@ export default function BusTracker({ darkMode = false }: { darkMode?: boolean })
                       {/* Pulse dot indicator inside the list */}
                       <span className={`w-2 h-2 rounded-full shadow-sm ${isStale ? 'bg-rose-500' : 'bg-emerald-400'}`}></span>
                   </div>
-                  <p className={`text-[9px] font-bold uppercase truncate pr-2 ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>
+                  {/* UPDATED: Changed route text color to Gwinnett Purple/Gold */}
+                  <p className={`text-[9px] font-bold uppercase truncate pr-2 ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>
                       {routeInfo.split(' - ')[1] || routeInfo}
                   </p>
                 </div>
