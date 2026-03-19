@@ -87,7 +87,7 @@ export const StatusCharts = ({ buses, statusOptions, darkMode }: { buses: any[],
                 <div className="flex justify-between items-end mb-8">
                     <div>
                         <h3 className={`text-sm font-black uppercase tracking-widest ${textSecondary}`}>Shop Bottlenecks</h3>
-                        <h2 className={`text-2xl font-black italic tracking-tight uppercase mt-1 ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Down-Unit Breakdown</h2>
+                        <h2 className={`text-2xl font-black italic tracking-tight uppercase mt-1 ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Down-Unit Breakdown</h2>
                     </div>
                     <div className="text-right">
                         <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${darkMode ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-500'}`}>Tracking {stats.down} Issues</span>
@@ -165,7 +165,7 @@ export const AnalyticsDashboard = ({ buses, showToast, darkMode }: { buses: any[
 
                 <div className="space-y-3">
                     {criticalBuses.length === 0 ? (
-                        <p className="text-center italic opacity-50 py-10 font-bold">No buses are currently Out of Service.</p>
+                        <p className="text-center italic opacity-50 py-10 font-bold">No units are currently Out of Service.</p>
                     ) : criticalBuses.map((bus, idx) => (
                         <div key={bus.docId} className={`flex items-center justify-between p-4 rounded-2xl border transition-all hover:scale-[1.01] ${darkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-slate-100 shadow-sm'}`}>
                             <div className="flex items-center gap-4">
@@ -174,7 +174,7 @@ export const AnalyticsDashboard = ({ buses, showToast, darkMode }: { buses: any[
                                 </div>
                                 <div>
                                     <h4 className={`text-lg font-black leading-none ${textPrimary}`}>Unit #{bus.number}</h4>
-                                    <p className={`text-[10px] font-bold uppercase tracking-widest mt-1 ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>{bus.status}</p>
+                                    <p className={`text-[10px] font-bold uppercase tracking-widest mt-1 ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>{bus.status}</p>
                                 </div>
                             </div>
                             <div className="text-right">
@@ -190,7 +190,7 @@ export const AnalyticsDashboard = ({ buses, showToast, darkMode }: { buses: any[
             <div className={`p-6 md:p-8 rounded-3xl border shadow-xl flex flex-col ${bgClass}`}>
                 <div className="mb-6">
                     <h3 className={`text-sm font-black uppercase tracking-widest ${textSecondary}`}>System Overview</h3>
-                    <h2 className={`text-2xl font-black italic tracking-tight uppercase mt-1 ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Fleet Health Metrics</h2>
+                    <h2 className={`text-2xl font-black italic tracking-tight uppercase mt-1 ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Fleet Health Metrics</h2>
                 </div>
 
                 <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -212,12 +212,12 @@ export const AnalyticsDashboard = ({ buses, showToast, darkMode }: { buses: any[
                     </div>
 
                     {/* Mock Metric 3 */}
-                    <div className={`p-5 rounded-2xl border sm:col-span-2 flex items-center justify-between ${darkMode ? 'bg-[#002d72]/20 border-[#002d72]/50' : 'bg-[#002d72]/5 border-[#002d72]/20'}`}>
+                    <div className={`p-5 rounded-2xl border sm:col-span-2 flex items-center justify-between ${darkMode ? 'bg-[#522D80]/20 border-[#522D80]/50' : 'bg-[#522D80]/5 border-[#522D80]/20'}`}>
                         <div>
-                            <span className="text-[10px] font-black uppercase tracking-widest opacity-50 mb-1 block">Hamilton Division Status</span>
-                            <span className={`text-xl font-black italic uppercase ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Operating Normally</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest opacity-50 mb-1 block">Gwinnett Place Status</span>
+                            <span className={`text-xl font-black italic uppercase ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Operating Normally</span>
                         </div>
-                        <div className="w-12 h-12 rounded-full border-4 border-[#ef7c00] flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full border-4 border-[#FFC72C] flex items-center justify-center">
                             <span className="text-xl">✅</span>
                         </div>
                     </div>
@@ -227,4 +227,3 @@ export const AnalyticsDashboard = ({ buses, showToast, darkMode }: { buses: any[
         </div>
     );
 };
-//test

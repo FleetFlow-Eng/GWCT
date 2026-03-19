@@ -88,7 +88,7 @@ const AICameraModal = ({ onAnalyze, onClose, darkMode }: { onAnalyze: (text: str
                 </div>
                 
                 {/* Camera Viewfinder */}
-                <div className="relative w-full rounded-3xl overflow-hidden shadow-[0_0_50px_#ef7c0044] border-2 border-slate-700 bg-black aspect-[3/4]">
+                <div className="relative w-full rounded-3xl overflow-hidden shadow-[0_0_50px_#FFC72C44] border-2 border-slate-700 bg-black aspect-[3/4]">
                     <video ref={videoRef} autoPlay playsInline muted className={`w-full h-full object-cover ${isAnalyzing ? 'blur-sm opacity-50' : ''}`}></video>
                     <canvas ref={canvasRef} className="hidden"></canvas>
 
@@ -139,7 +139,7 @@ export const PartsInventory = ({ showToast, darkMode }: { showToast: (msg: strin
     }, [searchTerm, displayLimit]);
 
     const bgClass = darkMode ? 'bg-slate-900/50 border-slate-800/50 backdrop-blur-xl' : 'bg-white/80 border-slate-200/50 backdrop-blur-xl';
-    const inputClass = darkMode ? 'bg-slate-800/50 border-slate-700 text-white focus:ring-2 focus:ring-[#ef7c00]/50' : 'bg-slate-50 border-slate-200 text-black focus:ring-2 focus:ring-[#002d72]/30';
+    const inputClass = darkMode ? 'bg-slate-800/50 border-slate-700 text-white focus:ring-2 focus:ring-[#FFC72C]/50' : 'bg-slate-50 border-slate-200 text-black focus:ring-2 focus:ring-[#522D80]/30';
 
     const handleCopy = (num: string) => {
         navigator.clipboard.writeText(num);
@@ -161,7 +161,7 @@ export const PartsInventory = ({ showToast, darkMode }: { showToast: (msg: strin
             {/* --- HEADER --- */}
             <div className="flex justify-between items-end gap-4 flex-wrap">
                 <div>
-                    <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Parts Registry</h2>
+                    <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Parts Registry</h2>
                     <p className={`text-[10px] font-black uppercase tracking-widest mt-1 flex items-center gap-2 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                         <span className="text-emerald-500">✨ AI VISION ENABLED</span>
                     </p>
@@ -217,8 +217,8 @@ export const PartsInventory = ({ showToast, darkMode }: { showToast: (msg: strin
                         </thead>
                         <tbody className={`divide-y ${darkMode ? 'divide-slate-800' : 'divide-slate-100'}`}>
                             {filteredParts.map((p: any, i: number) => (
-                                <tr key={i} onClick={() => handleCopy(p.partNumber)} className={`group cursor-pointer transition-all duration-150 ${darkMode ? 'hover:bg-slate-800/50' : 'hover:bg-blue-50/50'}`}>
-                                    <td className="p-5"><span className={`font-mono font-black text-sm px-3 py-1.5 rounded-lg transition-colors group-active:bg-[#ef7c00] group-active:text-white ${darkMode ? 'bg-slate-800 text-[#ef7c00]' : 'bg-orange-50 text-[#ef7c00]'}`}>{p.partNumber}</span></td>
+                                <tr key={i} onClick={() => handleCopy(p.partNumber)} className={`group cursor-pointer transition-all duration-150 ${darkMode ? 'hover:bg-slate-800/50' : 'hover:bg-purple-50/50'}`}>
+                                    <td className="p-5"><span className={`font-mono font-black text-sm px-3 py-1.5 rounded-lg transition-colors group-active:bg-[#FFC72C] group-active:text-white ${darkMode ? 'bg-slate-800 text-[#FFC72C]' : 'bg-purple-50 text-[#522D80]'}`}>{p.partNumber}</span></td>
                                     <td className={`p-5 font-bold uppercase text-sm tracking-tight leading-relaxed ${darkMode ? 'text-slate-200' : 'text-slate-700'}`}>{p.name}</td>
                                     <td className="p-5 text-center">
                                         <a href={`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(p.name + " " + p.partNumber + " bus part")}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="inline-flex p-2.5 rounded-xl bg-blue-500/10 text-blue-500 hover:bg-blue-500 hover:text-white transition-all shadow-sm">
@@ -237,7 +237,7 @@ export const PartsInventory = ({ showToast, darkMode }: { showToast: (msg: strin
                 {filteredParts.map((p: any, i: number) => (
                     <div key={i} onClick={() => handleCopy(p.partNumber)} className={`flex flex-col p-4 rounded-2xl border shadow-sm active:scale-[0.98] transition-transform ${bgClass}`}>
                         <div className="flex justify-between items-start mb-2">
-                            <span className={`font-mono font-black text-sm px-3 py-1.5 rounded-lg ${darkMode ? 'bg-slate-800 text-[#ef7c00]' : 'bg-orange-50 text-[#ef7c00]'}`}>#{p.partNumber}</span>
+                            <span className={`font-mono font-black text-sm px-3 py-1.5 rounded-lg ${darkMode ? 'bg-slate-800 text-[#FFC72C]' : 'bg-purple-50 text-[#522D80]'}`}>#{p.partNumber}</span>
                             <a href={`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(p.name + " " + p.partNumber + " bus part")}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="p-2 rounded-lg bg-blue-500/10 text-blue-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                             </a>
@@ -251,7 +251,7 @@ export const PartsInventory = ({ showToast, darkMode }: { showToast: (msg: strin
             {/* --- LOAD MORE --- */}
             {filteredParts.length >= displayLimit && (
                 <div className="flex justify-center pb-10">
-                    <button onClick={() => setDisplayLimit(prev => prev + 100)} className={`px-12 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all ${darkMode ? 'bg-slate-800 hover:bg-slate-700 border border-slate-700' : 'bg-white border-2 border-slate-200 hover:border-[#002d72] hover:text-[#002d72] shadow-md'}`}>Load More Results</button>
+                    <button onClick={() => setDisplayLimit(prev => prev + 100)} className={`px-12 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all ${darkMode ? 'bg-slate-800 hover:bg-slate-700 border border-slate-700' : 'bg-white border-2 border-slate-200 hover:border-[#522D80] hover:text-[#522D80] shadow-md'}`}>Load More Results</button>
                 </div>
             )}
         </div>

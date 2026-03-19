@@ -31,17 +31,17 @@ export const ShiftHandover = ({ buses, showToast }: { buses: any[], showToast: a
     return (
         <div className="max-w-4xl mx-auto p-8 animate-in fade-in slide-in-from-bottom-4">
             <div className="flex justify-between items-center mb-8">
-                <h2 className="text-3xl font-black text-[#002d72] uppercase italic">Shift Handover</h2>
-                <button onClick={copy} className="px-6 py-3 bg-[#002d72] text-white rounded-xl font-black uppercase text-xs shadow-lg hover:bg-[#ef7c00] transition-all transform active:scale-95">Copy Report</button>
+                <h2 className="text-3xl font-black text-[#522D80] uppercase italic">Shift Handover</h2>
+                <button onClick={copy} className="px-6 py-3 bg-[#522D80] text-white rounded-xl font-black uppercase text-xs shadow-lg hover:bg-[#FFC72C] transition-all transform active:scale-95">Copy Report</button>
             </div>
             <div className="space-y-4">
                 {report.length === 0 && <p className="text-center italic opacity-50 py-10">No recent activity in the last 12 hours.</p>}
                 {report.map((l, i) => (
                     <div key={i} className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex gap-6 items-center">
-                        <div className="w-16 h-16 bg-[#002d72]/5 rounded-xl flex items-center justify-center font-black text-[#002d72] text-lg">#{l.bus}</div>
+                        <div className="w-16 h-16 bg-[#522D80]/5 rounded-xl flex items-center justify-center font-black text-[#522D80] text-lg">#{l.bus}</div>
                         <div className="flex-grow">
                             <div className="flex justify-between mb-1">
-                                <span className="text-[10px] font-black text-[#ef7c00] uppercase">{l.action}</span>
+                                <span className="text-[10px] font-black text-[#FFC72C] uppercase">{l.action}</span>
                                 <span className="text-[10px] font-bold text-slate-500">{formatTime(l.timestamp)}</span>
                             </div>
                             <p className="text-sm font-bold text-slate-800 whitespace-pre-wrap">{l.details}</p>

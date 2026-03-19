@@ -49,8 +49,8 @@ export const BusDetailView = ({ bus, onClose, showToast, darkMode, isAdmin, stat
     // Sleek glassmorphism classes
     const modalBgClass = darkMode ? 'bg-slate-900/95 border-slate-700/50 text-white backdrop-blur-xl' : 'bg-white/95 border-white/20 text-slate-900 backdrop-blur-xl';
     const inputClass = darkMode 
-        ? 'bg-slate-800/50 border-slate-700 text-white focus:ring-2 focus:ring-[#ef7c00]/50 focus:border-[#ef7c00] transition-all' 
-        : 'bg-slate-50 border-slate-200 text-black focus:ring-2 focus:ring-[#002d72]/30 focus:border-[#002d72] transition-all shadow-inner';
+        ? 'bg-slate-800/50 border-slate-700 text-white focus:ring-2 focus:ring-[#FFC72C]/50 focus:border-[#FFC72C] transition-all' 
+        : 'bg-slate-50 border-slate-200 text-black focus:ring-2 focus:ring-[#522D80]/30 focus:border-[#522D80] transition-all shadow-inner';
         
     const type = statusOptions.find(o=>o.label===bus.status)?.type || (bus.status==='Active'?'ready':(['In Shop','Engine','Body Shop','Brakes'].includes(bus.status)?'shop':'hold'));
     const statusColorText = type==='ready' ? 'text-emerald-500' : type==='shop' ? 'text-amber-500' : 'text-red-500';
@@ -69,7 +69,7 @@ export const BusDetailView = ({ bus, onClose, showToast, darkMode, isAdmin, stat
                 {historyLogs.map(l => (
                     <div key={l.id} className={`p-3 md:p-4 rounded-xl md:rounded-2xl border relative group transition-all hover:shadow-md ${darkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-slate-100 shadow-sm'}`}>
                         <div className={`flex justify-between text-[8px] md:text-[9px] font-black uppercase tracking-widest mb-1.5 md:mb-2 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                            <span className={l.action==='EDIT' ? 'text-[#ef7c00]' : l.action==='CREATED' ? 'text-emerald-500' : ''}>{l.action}</span>
+                            <span className={l.action==='EDIT' ? 'text-[#FFC72C]' : l.action==='CREATED' ? 'text-emerald-500' : ''}>{l.action}</span>
                             <span>{formatTime(l.timestamp)}</span>
                         </div>
                         <p className="text-xs md:text-sm font-medium whitespace-pre-wrap leading-relaxed opacity-90">{l.details}</p>
@@ -113,7 +113,7 @@ export const BusDetailView = ({ bus, onClose, showToast, darkMode, isAdmin, stat
             
             <div className="flex flex-col-reverse sm:flex-row gap-3 md:gap-4">
                 <button onClick={()=>setIsEditing(false)} className={`w-full sm:w-1/2 py-3.5 md:py-4 rounded-xl font-black uppercase tracking-widest text-[10px] md:text-xs transition-colors ${darkMode ? 'bg-slate-800 hover:bg-slate-700 text-white' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}`}>Cancel</button>
-                <button onClick={handleSave} className="w-full sm:w-1/2 py-3.5 md:py-4 bg-[#002d72] hover:bg-[#ef7c00] text-white rounded-xl font-black uppercase tracking-widest text-[10px] md:text-xs shadow-lg transition-colors">Save Changes</button>
+                <button onClick={handleSave} className="w-full sm:w-1/2 py-3.5 md:py-4 bg-[#522D80] hover:bg-[#FFC72C] hover:text-[#522D80] text-white rounded-xl font-black uppercase tracking-widest text-[10px] md:text-xs shadow-lg transition-colors">Save Changes</button>
             </div>
         </div>
     );
@@ -145,11 +145,11 @@ export const BusDetailView = ({ bus, onClose, showToast, darkMode, isAdmin, stat
             <div className="grid grid-cols-3 gap-3 md:gap-6 mb-6 md:mb-8">
                 <div className={`p-3 md:p-4 rounded-xl ${darkMode ? 'bg-slate-800/30' : 'bg-slate-50/50'}`}>
                     <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest opacity-50 mb-1">OOS Date</p>
-                    <p className="text-sm md:text-xl font-black text-[#002d72] dark:text-blue-400">{bus.oosStartDate || '--'}</p>
+                    <p className="text-sm md:text-xl font-black text-[#522D80] dark:text-blue-400">{bus.oosStartDate || '--'}</p>
                 </div>
                 <div className={`p-3 md:p-4 rounded-xl ${darkMode ? 'bg-slate-800/30' : 'bg-slate-50/50'}`}>
                     <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest opacity-50 mb-1">Exp Return</p>
-                    <p className="text-sm md:text-xl font-black text-[#ef7c00]">{bus.expectedReturnDate || '--'}</p>
+                    <p className="text-sm md:text-xl font-black text-[#FFC72C]">{bus.expectedReturnDate || '--'}</p>
                 </div>
                 <div className={`p-3 md:p-4 rounded-xl ${darkMode ? 'bg-slate-800/30' : 'bg-slate-50/50'}`}>
                     <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest opacity-50 mb-1">Act Return</p>
@@ -165,9 +165,9 @@ export const BusDetailView = ({ bus, onClose, showToast, darkMode, isAdmin, stat
                 <div className="flex gap-2 md:gap-3">
                     {/* ONLY SHOW EDIT IF USER CAN EDIT */}
                     {canEdit && (
-                        <button onClick={()=>setIsEditing(true)} className={`flex-1 sm:flex-none px-6 md:px-8 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-colors ${darkMode ? 'bg-[#ef7c00]/10 text-[#ef7c00] hover:bg-[#ef7c00]/20' : 'bg-[#002d72]/10 text-[#002d72] hover:bg-[#002d72]/20'}`}>Edit Unit</button>
+                        <button onClick={()=>setIsEditing(true)} className={`flex-1 sm:flex-none px-6 md:px-8 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-colors ${darkMode ? 'bg-[#FFC72C]/10 text-[#FFC72C] hover:bg-[#FFC72C]/20' : 'bg-[#522D80]/10 text-[#522D80] hover:bg-[#522D80]/20'}`}>Edit Unit</button>
                     )}
-                    <button onClick={onClose} className="flex-1 sm:flex-none px-6 md:px-8 py-3.5 bg-[#002d72] hover:bg-[#ef7c00] text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-colors shadow-lg">Close</button>
+                    <button onClick={onClose} className="flex-1 sm:flex-none px-6 md:px-8 py-3.5 bg-[#522D80] hover:bg-[#FFC72C] hover:text-[#522D80] text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-colors shadow-lg">Close</button>
                 </div>
             </div>
         </div>

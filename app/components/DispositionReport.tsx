@@ -50,7 +50,7 @@ export const DispositionReport = ({ showToast, darkMode, isAdmin }: { showToast:
     }, []);
 
     const initializeRoutes = async () => {
-        if (!confirm("Load default Hamilton routes?")) return;
+        if (!confirm("Load default Gwinnett routes?")) return;
         const batch = writeBatch(db);
         INITIAL_ROUTES.forEach(r => { batch.set(doc(collection(db, "route_disposition")), r); });
         await batch.commit(); showToast("Routes Initialized", "success");
@@ -92,21 +92,21 @@ export const DispositionReport = ({ showToast, darkMode, isAdmin }: { showToast:
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 h-full flex flex-col space-y-6">
             <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 mb-2">
                 <div>
-                    <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Route Disposition</h2>
-                    <p className={`text-[10px] font-black uppercase tracking-widest mt-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Hamilton (C) • Fleet Delivery</p>
+                    <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Route Disposition</h2>
+                    <p className={`text-[10px] font-black uppercase tracking-widest mt-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Gwinnett Place • Fleet Delivery</p>
                 </div>
                 <div className="flex gap-2">
                     {isAdmin && routes.length > 0 && <button onClick={handleResetRoutes} className="px-6 py-2.5 border border-red-500/30 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-colors w-full sm:w-auto">Reset Routes</button>}
-                    {isAdmin && routes.length === 0 && <button onClick={initializeRoutes} className="px-6 py-2.5 bg-[#ef7c00] hover:bg-orange-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md w-full sm:w-auto">Init Routes</button>}
+                    {isAdmin && routes.length === 0 && <button onClick={initializeRoutes} className="px-6 py-2.5 bg-[#FFC72C] hover:bg-yellow-500 text-[#522D80] rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md w-full sm:w-auto">Init Routes</button>}
                 </div>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
-                <div className={`p-4 rounded-2xl border shadow-sm ${bgClass}`}><p className="text-[9px] font-black uppercase opacity-50 mb-1">Total Planned</p><p className="text-2xl sm:text-3xl font-black text-[#002d72]">{totals.planned}</p></div>
+                <div className={`p-4 rounded-2xl border shadow-sm ${bgClass}`}><p className="text-[9px] font-black uppercase opacity-50 mb-1">Total Planned</p><p className="text-2xl sm:text-3xl font-black text-[#522D80] dark:text-[#FFC72C]">{totals.planned}</p></div>
                 <div className={`p-4 rounded-2xl border shadow-sm ${bgClass}`}><p className="text-[9px] font-black uppercase opacity-50 mb-1">Less Cancelled</p><p className="text-2xl sm:text-3xl font-black text-red-500">{totals.cancelled}</p></div>
                 <div className={`p-4 rounded-2xl border shadow-sm ${bgClass}`}><p className="text-[9px] font-black uppercase opacity-50 mb-1">Unscheduled</p><p className="text-2xl sm:text-3xl font-black text-blue-500">{totals.unscheduled}</p></div>
                 <div className={`p-4 rounded-2xl border shadow-sm ${bgClass}`}><p className="text-[9px] font-black uppercase opacity-50 mb-1">Total Delivered</p><p className="text-2xl sm:text-3xl font-black text-green-500">{totals.delivered}</p></div>
-                <div className={`p-4 rounded-2xl border shadow-sm col-span-2 md:col-span-1 ${bgClass}`}><p className="text-[9px] font-black uppercase opacity-50 mb-1">Delivery %</p><p className={`text-2xl sm:text-3xl font-black ${totals.percent >= 100 ? 'text-green-500' : 'text-[#ef7c00]'}`}>{totals.percent}%</p></div>
+                <div className={`p-4 rounded-2xl border shadow-sm col-span-2 md:col-span-1 ${bgClass}`}><p className="text-[9px] font-black uppercase opacity-50 mb-1">Delivery %</p><p className={`text-2xl sm:text-3xl font-black ${totals.percent >= 100 ? 'text-green-500' : 'text-[#FFC72C]'}`}>{totals.percent}%</p></div>
             </div>
 
             {/* --- DESKTOP TABLE VIEW --- */}
@@ -121,8 +121,8 @@ export const DispositionReport = ({ showToast, darkMode, isAdmin }: { showToast:
                                 const delivered = (Number(r.planned) || 0) - (Number(r.cancelled) || 0) + (Number(r.unscheduled) || 0);
                                 const percent = (Number(r.planned) || 0) === 0 ? 0 : Math.round((delivered / (Number(r.planned) || 0)) * 100);
                                 return (
-                                    <tr key={r.id} onClick={() => { if(isAdmin) { setEditRoute(r); setEditForm({ planned: r.planned, cancelled: r.cancelled, unscheduled: r.unscheduled || 0 }); } }} className={`transition-colors ${isAdmin ? 'cursor-pointer' : ''} ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-blue-50'}`}>
-                                        <td className="p-4 font-bold">{r.route}</td><td className="p-4 text-center font-black">{r.planned}</td><td className="p-4 text-center font-black text-red-500">{r.cancelled}</td><td className="p-4 text-center font-black text-blue-500">{r.unscheduled || 0}</td><td className="p-4 text-center font-black text-green-500">{delivered}</td><td className="p-4 text-center"><span className={`px-2.5 py-1 rounded-full text-[9px] font-black uppercase ${percent >= 100 ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>{percent}%</span></td>
+                                    <tr key={r.id} onClick={() => { if(isAdmin) { setEditRoute(r); setEditForm({ planned: r.planned, cancelled: r.cancelled, unscheduled: r.unscheduled || 0 }); } }} className={`transition-colors ${isAdmin ? 'cursor-pointer' : ''} ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-purple-50'}`}>
+                                        <td className="p-4 font-bold">{r.route}</td><td className="p-4 text-center font-black">{r.planned}</td><td className="p-4 text-center font-black text-red-500">{r.cancelled}</td><td className="p-4 text-center font-black text-blue-500">{r.unscheduled || 0}</td><td className="p-4 text-center font-black text-green-500">{delivered}</td><td className="p-4 text-center"><span className={`px-2.5 py-1 rounded-full text-[9px] font-black uppercase ${percent >= 100 ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>{percent}%</span></td>
                                     </tr>
                                 );
                             })}
@@ -140,7 +140,7 @@ export const DispositionReport = ({ showToast, darkMode, isAdmin }: { showToast:
                         <div key={r.id} onClick={() => { if(isAdmin) { setEditRoute(r); setEditForm({ planned: r.planned, cancelled: r.cancelled, unscheduled: r.unscheduled || 0 }); } }} className={`p-5 rounded-2xl border shadow-sm ${isAdmin ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${bgClass}`}>
                             <div className="flex justify-between items-start mb-4 border-b pb-3 border-slate-500/20">
                                 <h3 className="font-black text-sm tracking-tight w-2/3">{r.route}</h3>
-                                <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase ${percent >= 100 ? 'bg-green-500 text-white' : 'bg-orange-500 text-white'}`}>{percent}%</span>
+                                <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase ${percent >= 100 ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}`}>{percent}%</span>
                             </div>
                             <div className="grid grid-cols-4 gap-2 text-center">
                                 <div className={`p-2 rounded-lg ${darkMode ? 'bg-slate-900' : 'bg-slate-50'}`}><p className="text-[8px] font-black uppercase opacity-50">Req</p><p className="text-sm font-black">{r.planned}</p></div>
@@ -157,15 +157,15 @@ export const DispositionReport = ({ showToast, darkMode, isAdmin }: { showToast:
                 <div className="fixed inset-0 z-[6000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in zoom-in-95">
                     <div className={`p-8 rounded-3xl w-full max-w-md shadow-2xl border ${darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-200 text-black'}`}>
                         <div className="flex justify-between items-center mb-6 border-b pb-4 border-slate-500/20">
-                            <h3 className={`text-xl font-black uppercase leading-tight w-5/6 ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>{editRoute.route}</h3>
+                            <h3 className={`text-xl font-black uppercase leading-tight w-5/6 ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>{editRoute.route}</h3>
                             <button onClick={() => setEditRoute(null)} className="text-2xl font-bold hover:text-red-500">✕</button>
                         </div>
                         <div className="space-y-4 mb-6">
-                            <div><label className="text-[10px] font-black uppercase tracking-widest opacity-50 block mb-1">Planned / Required</label><input type="number" className={`w-full p-3.5 rounded-xl font-bold outline-none focus:ring-2 focus:ring-[#ef7c00]/50 ${inputClass}`} value={editForm.planned} onChange={e => setEditForm({...editForm, planned: Number(e.target.value)})} /></div>
+                            <div><label className="text-[10px] font-black uppercase tracking-widest opacity-50 block mb-1">Planned / Required</label><input type="number" className={`w-full p-3.5 rounded-xl font-bold outline-none focus:ring-2 focus:ring-[#FFC72C]/50 ${inputClass}`} value={editForm.planned} onChange={e => setEditForm({...editForm, planned: Number(e.target.value)})} /></div>
                             <div><label className="text-[10px] font-black uppercase tracking-widest opacity-50 block mb-1">Less Cancelled</label><input type="number" className={`w-full p-3.5 rounded-xl font-bold outline-none focus:ring-2 focus:ring-red-500/50 ${inputClass}`} value={editForm.cancelled} onChange={e => setEditForm({...editForm, cancelled: Number(e.target.value)})} /></div>
                             <div><label className="text-[10px] font-black uppercase tracking-widest opacity-50 block mb-1">Unscheduled (Extras)</label><input type="number" className={`w-full p-3.5 rounded-xl font-bold outline-none focus:ring-2 focus:ring-blue-500/50 ${inputClass}`} value={editForm.unscheduled} onChange={e => setEditForm({...editForm, unscheduled: Number(e.target.value)})} /></div>
                         </div>
-                        <div className="flex gap-4"><button onClick={() => setEditRoute(null)} className={`w-1/2 py-4 rounded-xl font-black uppercase tracking-widest text-xs transition-colors ${darkMode ? 'bg-slate-700 hover:bg-slate-600 text-white' : 'bg-slate-100 hover:bg-slate-200 text-black'}`}>Cancel</button><button onClick={handleSave} className="w-1/2 py-4 bg-[#002d72] hover:bg-blue-800 text-white rounded-xl font-black uppercase tracking-widest text-xs shadow-lg transition-colors">Save Route</button></div>
+                        <div className="flex gap-4"><button onClick={() => setEditRoute(null)} className={`w-1/2 py-4 rounded-xl font-black uppercase tracking-widest text-xs transition-colors ${darkMode ? 'bg-slate-700 hover:bg-slate-600 text-white' : 'bg-slate-100 hover:bg-slate-200 text-black'}`}>Cancel</button><button onClick={handleSave} className="w-1/2 py-4 bg-[#522D80] hover:bg-purple-900 text-white rounded-xl font-black uppercase tracking-widest text-xs shadow-lg transition-colors">Save Route</button></div>
                     </div>
                 </div>
             )}

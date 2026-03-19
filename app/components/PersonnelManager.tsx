@@ -81,7 +81,7 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
 
     const jumpToLog = (typeFilter: string = 'All') => { setLogFilter(prev => ({ ...prev, type: typeFilter, search: '' })); setViewMode('log'); };
     const requestSort = (key: string) => setSortConfig({ key, direction: sortConfig.key === key && sortConfig.direction === 'asc' ? 'desc' : 'asc' });
-    const SortArrow = ({ columnKey }: { columnKey: string }) => sortConfig.key !== columnKey ? <span className="opacity-30 inline-block ml-1">↕</span> : <span className="inline-block ml-1 text-[#ef7c00]">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>;
+    const SortArrow = ({ columnKey }: { columnKey: string }) => sortConfig.key !== columnKey ? <span className="opacity-30 inline-block ml-1">↕</span> : <span className="inline-block ml-1 text-[#FFC72C]">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>;
 
     const handleAddEmployee = async (e: React.FormEvent) => { 
         e.preventDefault(); if(!newEmpName) return; 
@@ -150,15 +150,15 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 h-full flex flex-col">
             <div className="flex justify-between items-end mb-6 flex-wrap gap-4">
                 <div>
-                    <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Attendance Tracker</h2>
+                    <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Attendance Tracker</h2>
                     <p className={`text-[10px] font-black uppercase tracking-widest mt-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Incident Dashboard & Logs</p>
                 </div>
                 <div className="flex gap-2 flex-wrap">
                     <div className={`border rounded-lg p-1 flex shadow-sm ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'}`}>
-                        <button onClick={()=>setViewMode('dashboard')} className={`px-4 py-1.5 text-[10px] font-black uppercase rounded transition-all ${viewMode==='dashboard'?'bg-[#002d72] text-white shadow':(darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-[#002d72]')}`}>Dashboard</button>
-                        <button onClick={()=>setViewMode('log')} className={`px-4 py-1.5 text-[10px] font-black uppercase rounded transition-all ${viewMode==='log'?'bg-[#002d72] text-white shadow':(darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-[#002d72]')}`}>Master Log</button>
+                        <button onClick={()=>setViewMode('dashboard')} className={`px-4 py-1.5 text-[10px] font-black uppercase rounded transition-all ${viewMode==='dashboard'?'bg-[#522D80] text-white shadow':(darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-[#522D80]')}`}>Dashboard</button>
+                        <button onClick={()=>setViewMode('log')} className={`px-4 py-1.5 text-[10px] font-black uppercase rounded transition-all ${viewMode==='log'?'bg-[#522D80] text-white shadow':(darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-[#522D80]')}`}>Master Log</button>
                     </div>
-                    <button onClick={() => setShowIncidentModal(true)} className="px-6 py-2 bg-[#ef7c00] text-white rounded-lg font-black uppercase text-[10px] shadow-lg hover:bg-orange-600 transition-transform active:scale-95">+ Log Incident</button>
+                    <button onClick={() => setShowIncidentModal(true)} className="px-6 py-2 bg-[#FFC72C] text-[#522D80] rounded-lg font-black uppercase text-[10px] shadow-lg hover:bg-yellow-500 transition-transform active:scale-95">+ Log Incident</button>
                     <button onClick={() => setShowAddModal(true)} className={`px-4 py-2 rounded-lg font-black uppercase text-[10px] shadow-sm transition-transform active:scale-95 ${darkMode ? 'bg-slate-700 text-slate-200 hover:bg-slate-600' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}`}>+ Emp</button>
                 </div>
             </div>
@@ -168,7 +168,7 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
                     <div className={`rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] ${darkMode ? 'bg-slate-800 text-white border border-slate-700' : 'bg-white text-black'}`}>
                         <div className={`p-6 border-b flex justify-between items-center ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
                             <div>
-                                <h3 className={`text-2xl font-black uppercase ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>{selectedEmp.name}</h3>
+                                <h3 className={`text-2xl font-black uppercase ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>{selectedEmp.name}</h3>
                                 <p className={`text-xs font-bold ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Total Occurrences: <span className="text-red-500">{selectedEmp.totalOccurrences || 0}</span></p>
                             </div>
                             <div className="flex gap-2 items-center">
@@ -178,18 +178,18 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
                             </div>
                         </div>
                         <div className="p-6 overflow-y-auto custom-scrollbar">
-                            <div className={`p-4 rounded-xl border mb-6 ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-blue-50/50 border-blue-100'}`}>
-                                <h4 className={`text-[10px] font-black uppercase tracking-widest mb-3 ${darkMode ? 'text-[#ef7c00]' : 'text-blue-800'}`}>Log New Incident</h4>
+                            <div className={`p-4 rounded-xl border mb-6 ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-purple-50/50 border-purple-100'}`}>
+                                <h4 className={`text-[10px] font-black uppercase tracking-widest mb-3 ${darkMode ? 'text-[#FFC72C]' : 'text-purple-800'}`}>Log New Incident</h4>
                                 <div className="grid grid-cols-2 gap-4 mb-3">
-                                    <select className={`p-2 border rounded font-bold text-xs outline-none focus:border-[#ef7c00] ${inputClass}`} value={incData.type} onChange={e=>setIncData({...incData, type:e.target.value})}><option>Sick</option><option>FMLA</option><option>Failure to Report</option><option>Late Reporting</option><option>NC/NS</option><option>Vacation</option><option>Bereavement</option><option>Other</option></select>
-                                    <input type="number" className={`p-2 border rounded font-bold text-xs outline-none focus:border-[#ef7c00] ${inputClass}`} placeholder="Count" value={incData.count} onChange={e=>setIncData({...incData, count:Number(e.target.value)})} />
+                                    <select className={`p-2 border rounded font-bold text-xs outline-none focus:border-[#FFC72C] ${inputClass}`} value={incData.type} onChange={e=>setIncData({...incData, type:e.target.value})}><option>Sick</option><option>FMLA</option><option>Failure to Report</option><option>Late Reporting</option><option>NC/NS</option><option>Vacation</option><option>Bereavement</option><option>Other</option></select>
+                                    <input type="number" className={`p-2 border rounded font-bold text-xs outline-none focus:border-[#FFC72C] ${inputClass}`} placeholder="Count" value={incData.count} onChange={e=>setIncData({...incData, count:Number(e.target.value)})} />
                                 </div>
                                 <div className="flex gap-2 mb-3">
-                                    <input type="date" onClick={handleDateClick} className={`p-2 border rounded font-bold text-xs flex-grow cursor-pointer outline-none focus:border-[#ef7c00] ${inputClass}`} value={incData.date} onChange={e=>setIncData({...incData, date:e.target.value})} />
+                                    <input type="date" onClick={handleDateClick} className={`p-2 border rounded font-bold text-xs flex-grow cursor-pointer outline-none focus:border-[#FFC72C] ${inputClass}`} value={incData.date} onChange={e=>setIncData({...incData, date:e.target.value})} />
                                     <div className={`p-2 border rounded cursor-pointer font-bold text-xs flex items-center gap-2 transition-colors ${incData.docReceived?(darkMode?'bg-green-900/50 border-green-700 text-green-400':'bg-green-100 border-green-200 text-green-700'):inputClass}`} onClick={()=>setIncData({...incData, docReceived:!incData.docReceived})}><span>Doc?</span>{incData.docReceived && '✓'}</div>
                                 </div>
-                                <input className={`w-full p-2 border rounded font-bold text-xs mb-3 outline-none focus:border-[#ef7c00] ${inputClass}`} placeholder="Notes..." value={incData.notes} onChange={e=>setIncData({...incData, notes:e.target.value})} />
-                                <button onClick={handleLogIncident} className="w-full py-3 bg-[#002d72] hover:bg-[#ef7c00] text-white rounded font-black text-xs uppercase tracking-widest shadow-lg transition-colors">Add Record</button>
+                                <input className={`w-full p-2 border rounded font-bold text-xs mb-3 outline-none focus:border-[#FFC72C] ${inputClass}`} placeholder="Notes..." value={incData.notes} onChange={e=>setIncData({...incData, notes:e.target.value})} />
+                                <button onClick={handleLogIncident} className="w-full py-3 bg-[#522D80] hover:bg-[#FFC72C] hover:text-[#522D80] text-white rounded font-black text-xs uppercase tracking-widest shadow-lg transition-colors">Add Record</button>
                             </div>
                             <h4 className={`text-[10px] font-black uppercase tracking-widest mb-3 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Incident History</h4>
                             <div className={`border rounded-xl overflow-hidden overflow-x-auto ${darkMode ? 'border-slate-700' : 'border-slate-200'}`}>
@@ -216,11 +216,11 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
             {viewMode === 'dashboard' && (
                 <div className="space-y-6 overflow-y-auto pb-10">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div onClick={()=>jumpToLog('All')} className={`p-6 rounded-2xl shadow-sm border cursor-pointer transition-all hover:-translate-y-1 ${darkMode ? 'bg-slate-800 border-slate-700 hover:border-[#ef7c00]' : 'bg-white border-slate-200 hover:border-[#002d72] hover:bg-blue-50'}`}>
+                        <div onClick={()=>jumpToLog('All')} className={`p-6 rounded-2xl shadow-sm border cursor-pointer transition-all hover:-translate-y-1 ${darkMode ? 'bg-slate-800 border-slate-700 hover:border-[#FFC72C]' : 'bg-white border-slate-200 hover:border-[#522D80] hover:bg-purple-50'}`}>
                             <p className={`text-[10px] font-black uppercase tracking-widest mb-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Total Occurrences</p>
-                            <p className={`text-4xl font-black ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>{stats.totalOccurrences}</p>
+                            <p className={`text-4xl font-black ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>{stats.totalOccurrences}</p>
                         </div>
-                        <div onClick={()=>jumpToLog('All')} className={`p-6 rounded-2xl shadow-sm border cursor-pointer transition-all hover:-translate-y-1 ${darkMode ? 'bg-slate-800 border-slate-700 hover:border-[#ef7c00]' : 'bg-white border-slate-200 hover:border-[#002d72] hover:bg-blue-50'}`}>
+                        <div onClick={()=>jumpToLog('All')} className={`p-6 rounded-2xl shadow-sm border cursor-pointer transition-all hover:-translate-y-1 ${darkMode ? 'bg-slate-800 border-slate-700 hover:border-[#FFC72C]' : 'bg-white border-slate-200 hover:border-[#522D80] hover:bg-purple-50'}`}>
                             <p className={`text-[10px] font-black uppercase tracking-widest mb-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Employees Tracked</p>
                             <p className={`text-4xl font-black ${darkMode ? 'text-white' : 'text-slate-700'}`}>{personnel.length}</p>
                         </div>
@@ -228,7 +228,7 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
                             <p className={`text-[10px] font-black uppercase tracking-widest mb-2 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Incidents by Type</p>
                             <div className="space-y-1">
                                 {Object.entries(stats.typeCounts).slice(0,3).map(([k,v]) => (
-                                    <div key={k} onClick={()=>jumpToLog(k)} className={`flex justify-between text-xs font-bold cursor-pointer transition-colors ${darkMode ? 'text-slate-300 hover:text-[#ef7c00]' : 'text-slate-600 hover:text-[#ef7c00]'}`}>
+                                    <div key={k} onClick={()=>jumpToLog(k)} className={`flex justify-between text-xs font-bold cursor-pointer transition-colors ${darkMode ? 'text-slate-300 hover:text-[#FFC72C]' : 'text-slate-600 hover:text-[#FFC72C]'}`}>
                                         <span>{k}</span><span>{v as React.ReactNode}</span>
                                     </div>
                                 ))}
@@ -238,7 +238,7 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div className={`rounded-2xl shadow-sm border overflow-hidden ${bgClass}`}>
                             <div className={`p-4 border-b ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-                                <h3 className={`text-xs font-black uppercase tracking-widest ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Monthly Incident Summary</h3>
+                                <h3 className={`text-xs font-black uppercase tracking-widest ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Monthly Incident Summary</h3>
                             </div>
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left text-xs">
@@ -266,8 +266,8 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
 
                         <div className={`rounded-2xl shadow-sm border overflow-hidden flex flex-col h-[400px] ${bgClass}`}>
                             <div className={`p-4 border-b flex justify-between items-center ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-                                <h3 className={`text-xs font-black uppercase tracking-widest ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Employee Roster</h3>
-                                <input type="text" placeholder="Search Name..." className={`text-xs p-2 border rounded w-32 font-bold outline-none focus:border-[#ef7c00] transition-colors ${inputClass}`} value={rosterSearch} onChange={e=>setRosterSearch(e.target.value)} />
+                                <h3 className={`text-xs font-black uppercase tracking-widest ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Employee Roster</h3>
+                                <input type="text" placeholder="Search Name..." className={`text-xs p-2 border rounded w-32 font-bold outline-none focus:border-[#FFC72C] transition-colors ${inputClass}`} value={rosterSearch} onChange={e=>setRosterSearch(e.target.value)} />
                             </div>
                             <div className="overflow-y-auto flex-grow custom-scrollbar">
                                 <table className="w-full text-left text-xs">
@@ -276,7 +276,7 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
                                     </thead>
                                     <tbody className={`divide-y ${darkMode ? 'divide-slate-700' : 'divide-slate-100'}`}>
                                         {filteredRoster.map(emp => (
-                                            <tr key={emp.id} onClick={() => setSelectedEmp(emp)} className={`cursor-pointer transition-colors ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-blue-50'}`}>
+                                            <tr key={emp.id} onClick={() => setSelectedEmp(emp)} className={`cursor-pointer transition-colors ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-purple-50'}`}>
                                                 <td className="p-3 font-bold">{emp.name}</td>
                                                 <td className={`p-3 text-right font-black ${emp.totalOccurrences > 5 ? 'text-red-500' : ''}`}>{emp.totalOccurrences}</td>
                                             </tr>
@@ -292,23 +292,23 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
             {viewMode === 'log' && (
                 <div className={`rounded-2xl shadow-lg border flex-grow overflow-hidden flex flex-col ${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
                     <div className={`p-4 border-b flex gap-4 flex-wrap ${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                        <input className={`p-2 border rounded font-bold text-xs flex-grow min-w-[150px] outline-none focus:border-[#ef7c00] ${inputClass}`} placeholder="Search Employee..." value={logFilter.search} onChange={e=>setLogFilter({...logFilter, search:e.target.value})} />
-                        <select className={`p-2 border rounded font-bold text-xs outline-none focus:border-[#ef7c00] ${inputClass}`} value={logFilter.type} onChange={e=>setLogFilter({...logFilter, type:e.target.value})}><option value="All">All Types</option><option>Sick</option><option>FMLA</option><option>Failure to Report</option><option>Late Reporting</option><option>NC/NS</option><option>Vacation</option><option>Bereavement</option><option>Other</option></select>
+                        <input className={`p-2 border rounded font-bold text-xs flex-grow min-w-[150px] outline-none focus:border-[#FFC72C] ${inputClass}`} placeholder="Search Employee..." value={logFilter.search} onChange={e=>setLogFilter({...logFilter, search:e.target.value})} />
+                        <select className={`p-2 border rounded font-bold text-xs outline-none focus:border-[#FFC72C] ${inputClass}`} value={logFilter.type} onChange={e=>setLogFilter({...logFilter, type:e.target.value})}><option value="All">All Types</option><option>Sick</option><option>FMLA</option><option>Failure to Report</option><option>Late Reporting</option><option>NC/NS</option><option>Vacation</option><option>Bereavement</option><option>Other</option></select>
                     </div>
                     <div className="overflow-x-auto flex-grow custom-scrollbar">
                         <div className={`min-w-[700px] border-b p-3 grid grid-cols-12 gap-2 text-[9px] font-black uppercase tracking-widest ${darkMode ? 'bg-slate-800 border-slate-700 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-500'}`}>
-                            <div className="col-span-3 cursor-pointer flex items-center hover:text-[#ef7c00] transition-colors" onClick={() => requestSort('employeeName')}>Employee Name <SortArrow columnKey="employeeName" /></div>
-                            <div className="col-span-2 cursor-pointer flex items-center hover:text-[#ef7c00] transition-colors" onClick={() => requestSort('type')}>Incident Type <SortArrow columnKey="type" /></div>
-                            <div className="col-span-2 cursor-pointer flex items-center hover:text-[#ef7c00] transition-colors" onClick={() => requestSort('date')}>Date <SortArrow columnKey="date" /></div>
-                            <div className="col-span-1 text-center cursor-pointer flex items-center justify-center hover:text-[#ef7c00] transition-colors" onClick={() => requestSort('count')}>Count <SortArrow columnKey="count" /></div>
-                            <div className="col-span-1 text-center cursor-pointer flex items-center justify-center hover:text-[#ef7c00] transition-colors" onClick={() => requestSort('docReceived')}>Doc? <SortArrow columnKey="docReceived" /></div>
+                            <div className="col-span-3 cursor-pointer flex items-center hover:text-[#FFC72C] transition-colors" onClick={() => requestSort('employeeName')}>Employee Name <SortArrow columnKey="employeeName" /></div>
+                            <div className="col-span-2 cursor-pointer flex items-center hover:text-[#FFC72C] transition-colors" onClick={() => requestSort('type')}>Incident Type <SortArrow columnKey="type" /></div>
+                            <div className="col-span-2 cursor-pointer flex items-center hover:text-[#FFC72C] transition-colors" onClick={() => requestSort('date')}>Date <SortArrow columnKey="date" /></div>
+                            <div className="col-span-1 text-center cursor-pointer flex items-center justify-center hover:text-[#FFC72C] transition-colors" onClick={() => requestSort('count')}>Count <SortArrow columnKey="count" /></div>
+                            <div className="col-span-1 text-center cursor-pointer flex items-center justify-center hover:text-[#FFC72C] transition-colors" onClick={() => requestSort('docReceived')}>Doc? <SortArrow columnKey="docReceived" /></div>
                             <div className="col-span-2 flex items-center">Notes</div>
                             <div className="col-span-1 text-center flex items-center justify-center">Action</div>
                         </div>
                         <div className={`min-w-[700px] divide-y ${darkMode ? 'divide-slate-800' : 'divide-slate-100'}`}>
                             {filteredLog.length === 0 ? <div className={`p-10 text-center italic font-bold ${darkMode ? 'text-slate-600' : 'text-slate-400'}`}>No records found.</div> : filteredLog.map((log, i) => (
-                                <div key={i} className={`grid grid-cols-12 gap-2 p-3 items-center transition-colors text-xs ${darkMode ? 'hover:bg-slate-800 text-slate-300' : 'hover:bg-blue-50 text-slate-700'}`}>
-                                    <div className={`col-span-3 font-bold cursor-pointer hover:underline ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`} onClick={() => setSelectedEmp(personnel.find(p => p.id === log.employeeId))}>{log.employeeName}</div>
+                                <div key={i} className={`grid grid-cols-12 gap-2 p-3 items-center transition-colors text-xs ${darkMode ? 'hover:bg-slate-800 text-slate-300' : 'hover:bg-purple-50 text-slate-700'}`}>
+                                    <div className={`col-span-3 font-bold cursor-pointer hover:underline ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`} onClick={() => setSelectedEmp(personnel.find(p => p.id === log.employeeId))}>{log.employeeName}</div>
                                     <div className="col-span-2 font-medium"><span className={`px-2 py-0.5 rounded text-[10px] uppercase font-black ${log.type==='Sick'?'bg-orange-500/20 text-orange-500':log.type==='FMLA'?'bg-blue-500/20 text-blue-500':'bg-red-500/20 text-red-500'}`}>{log.type}</span></div>
                                     <div className="col-span-2 font-mono">{log.date}</div>
                                     <div className="col-span-1 text-center font-black">{log.count}</div>
@@ -325,11 +325,11 @@ export const PersonnelManager = ({ showToast, darkMode }: { showToast: any, dark
             {showAddModal && (
                 <div className="fixed inset-0 z-[6000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in zoom-in-95">
                     <div className={`p-6 rounded-2xl w-full max-w-sm shadow-2xl border ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'}`}>
-                        <h3 className={`text-xl font-black mb-4 uppercase ${darkMode ? 'text-[#ef7c00]' : 'text-[#002d72]'}`}>Add Employee</h3>
-                        <input className={`w-full p-3 border-2 rounded-lg mb-4 font-bold outline-none focus:border-[#ef7c00] ${inputClass}`} placeholder="Full Name (e.g. John Doe)" value={newEmpName} onChange={e=>setNewEmpName(e.target.value)} />
+                        <h3 className={`text-xl font-black mb-4 uppercase ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Add Employee</h3>
+                        <input className={`w-full p-3 border-2 rounded-lg mb-4 font-bold outline-none focus:border-[#FFC72C] ${inputClass}`} placeholder="Full Name (e.g. John Doe)" value={newEmpName} onChange={e=>setNewEmpName(e.target.value)} />
                         <div className="flex gap-2">
                             <button onClick={()=>setShowAddModal(false)} className={`flex-1 py-3 rounded-lg font-bold text-xs ${darkMode ? 'bg-slate-700 text-white hover:bg-slate-600' : 'bg-slate-100 text-black hover:bg-slate-200'}`}>Cancel</button>
-                            <button onClick={handleAddEmployee} className="flex-1 py-3 bg-[#002d72] hover:bg-blue-800 text-white rounded-lg font-bold text-xs transition-colors">Add Employee</button>
+                            <button onClick={handleAddEmployee} className="flex-1 py-3 bg-[#522D80] hover:bg-purple-900 text-white rounded-lg font-bold text-xs transition-colors">Add Employee</button>
                         </div>
                     </div>
                 </div>
