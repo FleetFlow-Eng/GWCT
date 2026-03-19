@@ -43,38 +43,31 @@ export const AdminPanel = ({ showToast, darkMode }: { showToast: any, darkMode: 
         setLoadingLogs(false);
     };
 
-    // --- TEMPORARY SYNC SCRIPT FOR GWINNETT BUSES ---
     const syncGwinnettBuses = async () => {
         if (!window.confirm("WARNING: This will delete all current buses and import live Gwinnett buses. Continue?")) return;
-        
         try {
-            // 1. Erase all current buses in Firestore
             const busSnap = await getDocs(collection(db, "buses"));
             const deletePromises = busSnap.docs.map(d => deleteDoc(d.ref));
             await Promise.all(deletePromises);
 
-            // 2. Fetch the live Gwinnett feed from your API
             const res = await fetch('/api/vehicles');
             const liveBuses = await res.json();
 
-            // 3. Add the live buses into Firestore
             const addPromises = liveBuses.map((bus: any) => {
                 const busNum = bus.vehicleId || bus.id;
                 const routeId = bus.route || "Unknown";
                 
                 return setDoc(doc(db, "buses", String(busNum)), {
                     number: String(busNum),
-                    status: "Active", // Defaulting to Active since they are currently transmitting
+                    status: "Active", 
                     location: `Route ${routeId}`,
                     notes: "Auto-imported from live GTFS-RT feed",
                     oosStartDate: null,
                     disposition: ""
                 });
             });
-            
             await Promise.all(addPromises);
             alert(`Success! Imported ${liveBuses.length} live Gwinnett buses.`);
-            
         } catch (error) {
             console.error("Database sync error:", error);
             alert("An error occurred while syncing the database.");
@@ -89,11 +82,7 @@ export const AdminPanel = ({ showToast, darkMode }: { showToast: any, darkMode: 
                     <h2 className={`text-3xl font-black italic uppercase tracking-tighter ${darkMode ? 'text-[#FFC72C]' : 'text-[#522D80]'}`}>Admin Panel</h2>
                     <p className="text-[10px] font-black uppercase tracking-widest opacity-50 mt-1">Manage System Settings</p>
                 </div>
-                {/* TEMPORARY SYNC BUTTON */}
-                <button 
-                    onClick={syncGwinnettBuses}
-                    className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-black text-[10px] uppercase tracking-widest rounded-xl shadow-lg transition-transform active:scale-95"
-                >
+                <button onClick={syncGwinnettBuses} className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-black text-[10px] uppercase tracking-widest rounded-xl shadow-lg transition-transform active:scale-95">
                     ⚠️ Sync Live Gwinnett Fleet
                 </button>
             </div>
@@ -135,10 +124,10 @@ export const AdminPanel = ({ showToast, darkMode }: { showToast: any, darkMode: 
                             return (
                                 <tr key={u.id} className={darkMode ? 'hover:bg-slate-700' : 'hover:bg-purple-50'}>
                                     <td className="p-4 font-bold cursor-pointer text-[#522D80] hover:underline" onClick={()=>fetchUserHistory(u.email)}>
-                                        {u.email} {isMaster && <span className="text-[8px] bg-[#FFC72C] text-slate-900 px-1 py-0.5 rounded ml-2">MASTER</span>}
+                                        {u.email} {isMaster && <span className="text-[8px] bg-[#FFC72C] text-[#522D80] px-1 py-0.5 rounded ml-2 shadow-sm">MASTER</span>}
                                     </td>
                                     <td className="p-4 text-center">
-                                        <span className={`px-2 py-1 rounded text-[9px] font-black uppercase ${isMaster ? 'bg-purple-100 text-[#522D80] border border-[#522D80]' : u.role === 'admin' ? 'bg-purple-100 text-[#522D80] border border-[#522D80]' : u.role === 'basic' ? 'bg-slate-200 text-slate-600 border border-slate-300' : 'bg-blue-100 text-blue-700 border border-blue-200'}`}>
+                                        <span className={`px-2 py-1 rounded text-[9px] font-black uppercase ${isMaster ? 'bg-purple-100 text-[#522D80] border border-[#522D80]' : u.role === 'admin' ? 'bg-purple-100 text-[#522D80] border border-[#522D80]' : u.role === 'basic' ? 'bg-slate-200 text-slate-600 border border-slate-300' : 'bg-emerald-100 text-emerald-700 border border-emerald-200'}`}>
                                             {isMaster ? 'Master Admin' : u.role === 'admin' ? 'Admin' : u.role === 'basic' ? 'Basic (View)' : 'Standard'}
                                         </span>
                                     </td>
